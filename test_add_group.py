@@ -11,15 +11,6 @@ class TestAddGroup(unittest.TestCase):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
-    
-    def test_add_group(self):
-        wd = self.wd
-        self.open_home_page(wd)
-        self.login(wd)
-        self.open_group_page(wd)
-        self.submit_group_create(wd)
-        self.return_to_group_page(wd)
-
     def return_to_group_page(self, wd):
         # return to group page
         wd.find_element(By.LINK_TEXT, "group page").click()
@@ -35,22 +26,26 @@ class TestAddGroup(unittest.TestCase):
         # open group page
         wd.find_element(By.LINK_TEXT, "groups").click()
         wd.find_element(By.NAME, "new").click()
+        self.fill_group_form(wd, name="Group1",header= "header", footer= "footer")
+
+    def fill_group_form(self, wd, name, header, footer):
+        # fill group name
         wd.find_element(By.NAME, "group_name").click()
         wd.find_element(By.NAME, "group_name").clear()
-        wd.find_element(By.NAME, "group_name").send_keys("Group1")
+        wd.find_element(By.NAME, "group_name").send_keys(name)
         wd.find_element(By.NAME, "group_header").clear()
-        wd.find_element(By.NAME, "group_header").send_keys("header")
+        wd.find_element(By.NAME, "group_header").send_keys(header)
         wd.find_element(By.NAME, "group_footer").clear()
-        wd.find_element(By.NAME, "group_footer").send_keys("footer")
+        wd.find_element(By.NAME, "group_footer").send_keys(footer)
         wd.find_element(By.NAME, "group_name").click()
 
-    def login(self, wd):
+    def login(self, wd, userName, password):
         #  login
         wd.find_element(By.NAME, "user").click()
         wd.find_element(By.NAME, "user").clear()
-        wd.find_element(By.NAME, "user").send_keys("admin")
+        wd.find_element(By.NAME, "user").send_keys(userName)
         wd.find_element(By.NAME, "pass").clear()
-        wd.find_element(By.NAME, "pass").send_keys("secret")
+        wd.find_element(By.NAME, "pass").send_keys(password)
         wd.find_element(By.XPATH, "//input[@value='Login']").click()
 
     def open_home_page(self, wd):
@@ -68,6 +63,23 @@ class TestAddGroup(unittest.TestCase):
         except NoAlertPresentException as e: return False
         return True
 
+    def test_add_group(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, userName="admin", password="secret")
+        self.open_group_page(wd)
+        self.fill_group_form(wd, name= "Group1",header= "header", footer= "footer")
+        self.submit_group_create(wd)
+        self.return_to_group_page(wd)
+
+    def test_add_empty_group(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, userName="admin", password="secret")
+        self.open_group_page(wd)
+        self.fill_group_form(name= "",header= "", footer= "")
+        self.submit_group_create(wd)
+        self.return_to_group_page(wd)
     
     def tearDown(self):
         self.wd.quit()
