@@ -5,6 +5,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 
 import unittest
+from group import Group
+
 
 class TestAddGroup(unittest.TestCase):
     def setUp(self):
@@ -25,16 +27,16 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element(By.LINK_TEXT, "groups").click()
 
 
-    def fill_group_form(self, wd, name, header, footer):
+    def fill_group_form(self, wd, group):
         # fill group name
         wd.find_element(By.NAME, "new").click()
         wd.find_element(By.NAME, "group_name").click()
         wd.find_element(By.NAME, "group_name").clear()
-        wd.find_element(By.NAME, "group_name").send_keys(name)
+        wd.find_element(By.NAME, "group_name").send_keys(group.name)
         wd.find_element(By.NAME, "group_header").clear()
-        wd.find_element(By.NAME, "group_header").send_keys(header)
+        wd.find_element(By.NAME, "group_header").send_keys(group.header)
         wd.find_element(By.NAME, "group_footer").clear()
-        wd.find_element(By.NAME, "group_footer").send_keys(footer)
+        wd.find_element(By.NAME, "group_footer").send_keys(group.footer)
         wd.find_element(By.NAME, "group_name").click()
 
     def login(self, wd, userName, password):
@@ -65,7 +67,7 @@ class TestAddGroup(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, userName="admin", password="secret")
         self.open_group_page(wd)
-        self.fill_group_form(wd, name= "Group1",header= "header", footer= "footer")
+        self.fill_group_form(wd, Group(name= "Group1",header= "header", footer= "footer"))
         self.submit_group_create(wd)
         self.return_to_group_page(wd)
 
@@ -74,7 +76,7 @@ class TestAddGroup(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, userName="admin", password="secret")
         self.open_group_page(wd)
-        self.fill_group_form(wd, name= "",header= "", footer= "")
+        self.fill_group_form(wd, Group(name= "",header= "", footer= ""))
         self.submit_group_create(wd)
         self.return_to_group_page(wd)
     
