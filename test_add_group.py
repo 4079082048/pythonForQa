@@ -19,17 +19,15 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element(By.NAME, "user").send_keys("admin")
 
     def submit_group_create(self, wd):
-        # submit group create
         wd.find_element(By.NAME, "submit").click()
 
     def open_group_page(self, wd):
-        # open group page
         wd.find_element(By.LINK_TEXT, "groups").click()
-        wd.find_element(By.NAME, "new").click()
-        self.fill_group_form(wd, name="Group1",header= "header", footer= "footer")
+
 
     def fill_group_form(self, wd, name, header, footer):
         # fill group name
+        wd.find_element(By.NAME, "new").click()
         wd.find_element(By.NAME, "group_name").click()
         wd.find_element(By.NAME, "group_name").clear()
         wd.find_element(By.NAME, "group_name").send_keys(name)
@@ -49,7 +47,6 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element(By.XPATH, "//input[@value='Login']").click()
 
     def open_home_page(self, wd):
-        # open home mage
         wd.get("http://localhost/addressbook/index.php")
 
     def is_element_present(self, how, what):
@@ -77,7 +74,7 @@ class TestAddGroup(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, userName="admin", password="secret")
         self.open_group_page(wd)
-        self.fill_group_form(name= "",header= "", footer= "")
+        self.fill_group_form(wd, name= "",header= "", footer= "")
         self.submit_group_create(wd)
         self.return_to_group_page(wd)
     
