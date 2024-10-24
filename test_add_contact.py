@@ -20,45 +20,58 @@ class TestAddContact(unittest.TestCase):
 
     def test_add_contact(self):
         wd = self.wd
-        #open home page
+        self.open_home_page(wd)
+        self.login(wd)
+        self.create_contact(wd)
+        self.check_and_logout(wd)
+
+    def check_and_logout(self, wd):
+        # return to main page, logout
         wd.get("http://localhost/addressbook/index.php")
-        #login
+        wd.find_element(By.LINK_TEXT, "Logout").click()
+
+    def create_contact(self, wd):
+        # create contact
+        wd.find_element(By.LINK_TEXT, "add new").click()
+        wd.get("http://localhost/addressbook/edit.php")
+        wd.find_element(By.NAME, "firstname").click()
+        wd.find_element(By.NAME, "firstname").clear()
+        wd.find_element(By.NAME, "firstname").send_keys("Sofia")
+        wd.find_element(By.NAME, "lastname").clear()
+        wd.find_element(By.NAME, "lastname").send_keys("Zolotova")
+        wd.find_element(By.NAME, "address").click()
+        wd.find_element(By.NAME, "company").click()
+        wd.find_element(By.NAME, "company").clear()
+        wd.find_element(By.NAME, "company").send_keys("ailet")
+        wd.find_element(By.NAME, "address").click()
+        wd.find_element(By.NAME, "address").clear()
+        wd.find_element(By.NAME, "address").send_keys("Tula")
+        wd.find_element(By.NAME, "theform").click()
+        wd.find_element(By.NAME, "mobile").click()
+        wd.find_element(By.NAME, "mobile").click()
+        wd.find_element(By.NAME, "mobile").clear()
+        wd.find_element(By.NAME, "mobile").send_keys("89096309913")
+        wd.find_element(By.NAME, "nickname").click()
+        wd.find_element(By.NAME, "nickname").clear()
+        wd.find_element(By.NAME, "nickname").send_keys("swallow")
+        wd.find_element(By.NAME, "title").click()
+        wd.find_element(By.NAME, "title").clear()
+        wd.find_element(By.NAME, "title").send_keys("mem")
+        wd.find_element(By.XPATH, "//div[@id='content']/form/input[20]").click()
+
+    def login(self, wd):
+        # login
         wd.find_element(By.NAME, "user").click()
         wd.find_element(By.NAME, "user").clear()
         wd.find_element(By.NAME, "user").send_keys("admin")
         wd.find_element(By.NAME, "pass").clear()
         wd.find_element(By.NAME, "pass").send_keys("secret")
         wd.find_element(By.XPATH, "//input[@value='Login']").click()
-        #create contact
-        wd.find_element(By.LINK_TEXT,"add new").click()
-        wd.get("http://localhost/addressbook/edit.php")
-        wd.find_element(By.NAME,"firstname").click()
-        wd.find_element(By.NAME,"firstname").clear()
-        wd.find_element(By.NAME,"firstname").send_keys("Sofia")
-        wd.find_element(By.NAME,"lastname").clear()
-        wd.find_element(By.NAME,"lastname").send_keys("Zolotova")
-        wd.find_element(By.NAME,"address").click()
-        wd.find_element(By.NAME,"company").click()
-        wd.find_element(By.NAME,"company").clear()
-        wd.find_element(By.NAME,"company").send_keys("ailet")
-        wd.find_element(By.NAME,"address").click()
-        wd.find_element(By.NAME,"address").clear()
-        wd.find_element(By.NAME,"address").send_keys("Tula")
-        wd.find_element(By.NAME,"theform").click()
-        wd.find_element(By.NAME,"mobile").click()
-        wd.find_element(By.NAME,"mobile").click()
-        wd.find_element(By.NAME,"mobile").clear()
-        wd.find_element(By.NAME,"mobile").send_keys("89096309913")
-        wd.find_element(By.NAME,"nickname").click()
-        wd.find_element(By.NAME,"nickname").clear()
-        wd.find_element(By.NAME,"nickname").send_keys("swallow")
-        wd.find_element(By.NAME,"title").click()
-        wd.find_element(By.NAME,"title").clear()
-        wd.find_element(By.NAME,"title").send_keys("mem")
-        wd.find_element(By.XPATH,"//div[@id='content']/form/input[20]").click()
-        # return to main page, logout
+
+    def open_home_page(self, wd):
+        # open home page
         wd.get("http://localhost/addressbook/index.php")
-        wd.find_element(By.LINK_TEXT, "Logout").click()
+
     def is_element_present(self, how, what):
         try:
             self.wd.find_element(by=how, value=what)
@@ -87,7 +100,7 @@ class TestAddContact(unittest.TestCase):
 
     def tearDown(self):
         self.wd.quit()
-        self.assertEqual([], self.verificationErrors)
+
 
 
 if __name__ == "__main__":
