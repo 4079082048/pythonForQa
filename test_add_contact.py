@@ -8,83 +8,74 @@ from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
 
-class AppDynamicsJob(unittest.TestCase):
+class TestAddContact(unittest.TestCase):
     def setUp(self):
-        # AppDynamics will automatically override this web driver
-        # as documented in https://docs.appdynamics.com/display/PRO44/Write+Your+First+Script
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(30)
-        self.base_url = "https://www.google.com/"
-        self.verificationErrors = []
-        self.accept_next_alert = True
+        self.wd = webdriver.Firefox()
+        self.wd.implicitly_wait(30)
 
-    def test_app_dynamics_job(self):
-        driver = self.driver
-        driver.get("http://localhost/addressbook/index.php")
-        driver.get("https://katalon.com/download-recorder")
-        driver.get("http://localhost/addressbook/index.php")
-        driver.find_element_by_link_text("add new").click()
-        driver.get("http://localhost/addressbook/edit.php")
-        driver.find_element_by_link_text("home").click()
-        driver.get("http://localhost/addressbook/")
-        driver.find_element_by_name("searchstring").clear()
-        driver.find_element_by_name("searchstring").send_keys("sister")
-        driver.find_element_by_name("searchstring").send_keys(Keys.ENTER)
-        driver.find_element_by_id("content").click()
-        driver.find_element_by_name("add").click()
-        driver.find_element_by_link_text("home").click()
-        driver.find_element_by_name("to_group").click()
-        driver.find_element_by_name("to_group").click()
-        driver.find_element_by_name("add").click()
-        driver.find_element_by_xpath("//body").click()
-        driver.find_element_by_xpath(
-            "(.//*[normalize-space(text()) and normalize-space(.)='Stop'])[1]/following::div[2]").click()
-        driver.find_element_by_xpath("//body").click()
-        driver.find_element_by_id("content").click()
-        driver.find_element_by_id("content").click()
-        driver.find_element_by_link_text("add new").click()
-        driver.find_element_by_name("firstname").click()
-        driver.find_element_by_name("firstname").clear()
-        driver.find_element_by_name("firstname").send_keys("Sofia")
-        driver.find_element_by_name("lastname").clear()
-        driver.find_element_by_name("lastname").send_keys("Zolotova")
-        driver.find_element_by_name("address").click()
-        driver.find_element_by_name("company").click()
-        driver.find_element_by_name("company").clear()
-        driver.find_element_by_name("company").send_keys("ailet")
-        driver.find_element_by_name("address").click()
-        driver.find_element_by_name("address").clear()
-        driver.find_element_by_name("address").send_keys("Tula")
-        driver.find_element_by_name("theform").click()
-        driver.find_element_by_name("mobile").click()
-        driver.find_element_by_name("mobile").click()
-        driver.find_element_by_name("mobile").clear()
-        driver.find_element_by_name("mobile").send_keys("89096309913")
-        driver.find_element_by_name("nickname").click()
-        driver.find_element_by_name("nickname").clear()
-        driver.find_element_by_name("nickname").send_keys("swallow")
-        driver.find_element_by_name("title").click()
-        driver.find_element_by_name("title").clear()
-        driver.find_element_by_name("title").send_keys("mem")
-        driver.find_element_by_xpath("//div[@id='content']/form/input[20]").click()
 
+    def __init__(self, methodName: str = "runTest"):
+        super().__init__(methodName)
+        self.wd = None
+
+    def test_add_contact(self):
+        wd = self.wd
+        #open home page
+        wd.get("http://localhost/addressbook/index.php")
+        #login
+        wd.find_element(By.NAME, "user").click()
+        wd.find_element(By.NAME, "user").clear()
+        wd.find_element(By.NAME, "user").send_keys("admin")
+        wd.find_element(By.NAME, "pass").clear()
+        wd.find_element(By.NAME, "pass").send_keys("secret")
+        wd.find_element(By.XPATH, "//input[@value='Login']").click()
+        #create contact
+        wd.find_element(By.LINK_TEXT,"add new").click()
+        wd.get("http://localhost/addressbook/edit.php")
+        wd.find_element(By.NAME,"firstname").click()
+        wd.find_element(By.NAME,"firstname").clear()
+        wd.find_element(By.NAME,"firstname").send_keys("Sofia")
+        wd.find_element(By.NAME,"lastname").clear()
+        wd.find_element(By.NAME,"lastname").send_keys("Zolotova")
+        wd.find_element(By.NAME,"address").click()
+        wd.find_element(By.NAME,"company").click()
+        wd.find_element(By.NAME,"company").clear()
+        wd.find_element(By.NAME,"company").send_keys("ailet")
+        wd.find_element(By.NAME,"address").click()
+        wd.find_element(By.NAME,"address").clear()
+        wd.find_element(By.NAME,"address").send_keys("Tula")
+        wd.find_element(By.NAME,"theform").click()
+        wd.find_element(By.NAME,"mobile").click()
+        wd.find_element(By.NAME,"mobile").click()
+        wd.find_element(By.NAME,"mobile").clear()
+        wd.find_element(By.NAME,"mobile").send_keys("89096309913")
+        wd.find_element(By.NAME,"nickname").click()
+        wd.find_element(By.NAME,"nickname").clear()
+        wd.find_element(By.NAME,"nickname").send_keys("swallow")
+        wd.find_element(By.NAME,"title").click()
+        wd.find_element(By.NAME,"title").clear()
+        wd.find_element(By.NAME,"title").send_keys("mem")
+        wd.find_element(By.XPATH,"//div[@id='content']/form/input[20]").click()
+        # return to main page, logout
+        wd.get("http://localhost/addressbook/index.php")
+        wd.find_element(By.LINK_TEXT, "Logout").click()
     def is_element_present(self, how, what):
         try:
-            self.driver.find_element(by=how, value=what)
+            self.wd.find_element(by=how, value=what)
         except NoSuchElementException as e:
             return False
         return True
 
     def is_alert_present(self):
         try:
-            self.driver.switch_to_alert()
+            self.wd.switch_to_alert()
         except NoAlertPresentException as e:
             return False
         return True
 
     def close_alert_and_get_its_text(self):
         try:
-            alert = self.driver.switch_to_alert()
+            alert = self.wd.switch_to_alert()
             alert_text = alert.text
             if self.accept_next_alert:
                 alert.accept()
@@ -95,8 +86,7 @@ class AppDynamicsJob(unittest.TestCase):
             self.accept_next_alert = True
 
     def tearDown(self):
-        # To know more about the difference between verify and assert,
-        # visit https://www.seleniumhq.org/docs/06_test_design_considerations.jsp#validating-results
+        self.wd.quit()
         self.assertEqual([], self.verificationErrors)
 
 
