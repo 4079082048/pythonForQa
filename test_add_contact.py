@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+import unittest
 
 
 class TestAddContact(unittest.TestCase):
@@ -21,8 +19,8 @@ class TestAddContact(unittest.TestCase):
     def test_add_contact(self):
         wd = self.wd
         self.open_home_page(wd)
-        self.login(wd)
-        self.create_contact(wd)
+        self.login(wd, username= "admin", password= "secret")
+        self.create_contact(wd, firstname = "Sofia", lastname = "Zolotova", company = "ailet", address= "Tula", mobile= "89096309913", nickname= "swallow", tittle= "mem")
         self.check_and_logout(wd)
 
     def check_and_logout(self, wd):
@@ -30,43 +28,47 @@ class TestAddContact(unittest.TestCase):
         wd.get("http://localhost/addressbook/index.php")
         wd.find_element(By.LINK_TEXT, "Logout").click()
 
-    def create_contact(self, wd):
+    def create_contact(self, wd, firstname, lastname, company, address, mobile, nickname, tittle):
         # create contact
         wd.find_element(By.LINK_TEXT, "add new").click()
         wd.get("http://localhost/addressbook/edit.php")
         wd.find_element(By.NAME, "firstname").click()
         wd.find_element(By.NAME, "firstname").clear()
-        wd.find_element(By.NAME, "firstname").send_keys("Sofia")
+        wd.find_element(By.NAME, "firstname").send_keys(firstname)
         wd.find_element(By.NAME, "lastname").clear()
-        wd.find_element(By.NAME, "lastname").send_keys("Zolotova")
+        wd.find_element(By.NAME, "lastname").send_keys(lastname)
         wd.find_element(By.NAME, "address").click()
         wd.find_element(By.NAME, "company").click()
         wd.find_element(By.NAME, "company").clear()
-        wd.find_element(By.NAME, "company").send_keys("ailet")
+        wd.find_element(By.NAME, "company").send_keys(company)
         wd.find_element(By.NAME, "address").click()
         wd.find_element(By.NAME, "address").clear()
-        wd.find_element(By.NAME, "address").send_keys("Tula")
+        wd.find_element(By.NAME, "address").send_keys(address)
         wd.find_element(By.NAME, "theform").click()
         wd.find_element(By.NAME, "mobile").click()
         wd.find_element(By.NAME, "mobile").click()
         wd.find_element(By.NAME, "mobile").clear()
-        wd.find_element(By.NAME, "mobile").send_keys("89096309913")
+        wd.find_element(By.NAME, "mobile").send_keys(mobile)
         wd.find_element(By.NAME, "nickname").click()
         wd.find_element(By.NAME, "nickname").clear()
-        wd.find_element(By.NAME, "nickname").send_keys("swallow")
+        wd.find_element(By.NAME, "nickname").send_keys(nickname)
         wd.find_element(By.NAME, "title").click()
         wd.find_element(By.NAME, "title").clear()
-        wd.find_element(By.NAME, "title").send_keys("mem")
+        wd.find_element(By.NAME, "title").send_keys(tittle)
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[20]").click()
 
-    def login(self, wd):
+    def login(self, wd, username, password):
         # login
         wd.find_element(By.NAME, "user").click()
         wd.find_element(By.NAME, "user").clear()
-        wd.find_element(By.NAME, "user").send_keys("admin")
+        wd.find_element(By.NAME, "user").send_keys(username())
         wd.find_element(By.NAME, "pass").clear()
-        wd.find_element(By.NAME, "pass").send_keys("secret")
+        wd.find_element(By.NAME, "pass").send_keys(password())
         wd.find_element(By.XPATH, "//input[@value='Login']").click()
+
+
+    def userName(self):
+        return "admin"
 
     def open_home_page(self, wd):
         # open home page
