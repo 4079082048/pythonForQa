@@ -22,7 +22,7 @@ class TestAddContact(unittest.TestCase):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, username= "admin", password= "secret")
-        self.create_contact(wd, Contact(firstname = "Sofia", lastname = "Zolotova", company = "ailet", address= "Tula", mobile= "89096309913", nickname= "swallow", title= "mem"))
+        self.create_contact(wd, Contact(firstname= "Sofia", lastname= "Zolotova", company= "ailet", address= "Tula", mobile= "89096309913", nickname= "swallow", title= "mem"))
         self.check_and_logout(wd)
 
 
@@ -30,7 +30,7 @@ class TestAddContact(unittest.TestCase):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, username= "admin", password= "secret")
-        self.create_contact(wd, Contact(firstname = "", lastname = "", company = "", address= "", mobile= "", nickname= "", title= ""))
+        self.create_contact(wd, Contact(firstname= "", lastname= "", company= "", address= "", mobile= "", nickname= "", title= ""))
         self.check_and_logout(wd)
 
 
@@ -55,7 +55,6 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(By.NAME, "address").click()
         wd.find_element(By.NAME, "address").clear()
         wd.find_element(By.NAME, "address").send_keys(contact.address)
-        wd.find_element(By.NAME, "theform").click()
         wd.find_element(By.NAME, "mobile").click()
         wd.find_element(By.NAME, "mobile").send_keys(contact.mobile)
         wd.find_element(By.NAME, "nickname").click()
@@ -63,7 +62,7 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(By.NAME, "nickname").send_keys(contact.nickname)
         wd.find_element(By.NAME, "title").click()
         wd.find_element(By.NAME, "title").clear()
-        wd.find_element(By.NAME, "title").send_keys(contact.tittle)
+        wd.find_element(By.NAME, "title").send_keys(contact.title)
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[20]").click()
 
     def login(self, wd, username, password):
@@ -116,3 +115,4 @@ class TestAddContact(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
