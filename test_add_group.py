@@ -24,5 +24,3 @@ def test_add_empty_group(app):
 
 
 
-if __name__ == "__main__":
-    unittest.main()

@@ -42,7 +42,7 @@ class Application():
     def login(self, username, password):
         #  login
         wd = self.wd
-        self.open_home_page(wd)
+        self.open_home_page()
         wd.find_element(By.NAME, "user").click()
         wd.find_element(By.NAME, "user").clear()
         wd.find_element(By.NAME, "user").send_keys(username)
