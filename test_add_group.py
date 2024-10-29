@@ -13,22 +13,26 @@ class TestAddGroup(unittest.TestCase):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
-    def return_to_group_page(self, wd):
+    def return_to_group_page(self):
         # return to group page
+        wd = self.wd
         wd.find_element(By.LINK_TEXT, "group page").click()
         wd.find_element(By.LINK_TEXT, "Logout").click()
         wd.find_element(By.NAME, "user").clear()
         wd.find_element(By.NAME, "user").send_keys("admin")
 
-    def submit_group_create(self, wd):
+    def submit_group_create(self):
+        wd = self.wd
         wd.find_element(By.NAME, "submit").click()
 
-    def open_group_page(self, wd):
+    def open_group_page(self):
+        wd = self.wd
         wd.find_element(By.LINK_TEXT, "groups").click()
 
-    def fill_group_form(self, wd, group):
+    def fill_group_form(self, group):
         # fill group
-        self.open_group_page(wd)
+        wd = self.wd
+        self.open_group_page()
         wd.find_element(By.NAME, "new").click()
         wd.find_element(By.NAME, "group_name").click()
         wd.find_element(By.NAME, "group_name").clear()
@@ -38,10 +42,11 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element(By.NAME, "group_footer").clear()
         wd.find_element(By.NAME, "group_footer").send_keys(group.footer)
         wd.find_element(By.NAME, "group_name").click()
-        self.return_to_group_page(wd)
+        self.return_to_group_page()
 
-    def login(self, wd, userName, password):
+    def login(self, userName, password):
         #  login
+        wd = self.wd
         self.open_home_page(wd)
         wd.find_element(By.NAME, "user").click()
         wd.find_element(By.NAME, "user").clear()
@@ -51,6 +56,7 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element(By.XPATH, "//input[@value='Login']").click()
 
     def open_home_page(self, wd):
+        wd = self.wd
         wd.get("http://localhost/addressbook/index.php")
 
     def is_element_present(self, how, what):
@@ -65,20 +71,19 @@ class TestAddGroup(unittest.TestCase):
         return True
 
     def test_add_group(self):
-        wd = self.wd
-        self.login(wd, userName="admin", password="secret")
-        self.fill_group_form(wd, Group(name= "Group1",header= "header", footer= "footer"))
-        self.submit_group_create(wd)
+        self.login(userName="admin", password="secret")
+        self.fill_group_form( Group(name= "Group1",header= "header", footer= "footer"))
+        self.submit_group_create()
 
 
     def test_add_empty_group(self):
-        wd = self.wd
-        self.login(wd, userName="admin", password="secret")
-        self.fill_group_form(wd, Group(name= "",header= "", footer= ""))
-        self.submit_group_create(wd)
+        self.login(userName="admin", password="secret")
+        self.fill_group_form(Group(name= "",header= "", footer= ""))
+        self.submit_group_create()
 
 
     def tearDown(self):
+        wd = self.wd
         self.wd.quit()
 
 

@@ -19,27 +19,27 @@ class TestAddContact(unittest.TestCase):
 
 
     def test_add_contact(self):
-        wd = self.wd
-        self.login(wd, username= "admin", password= "secret")
-        self.create_contact(wd, Contact(firstname= "Sofia", lastname= "Zolotova", company= "ailet", address= "Tula", mobile= "89096309913", nickname= "swallow", title= "mem"))
-        self.check_and_logout(wd)
+        self.login( username= "admin", password= "secret")
+        self.create_contact(Contact(firstname= "Sofia", lastname= "Zolotova", company= "ailet", address= "Tula", mobile= "89096309913", nickname= "swallow", title= "mem"))
+        self.check_and_logout()
 
 
     def test_add_empty_contact(self):
-        wd = self.wd
-        self.open_home_page(wd)
-        self.login(wd, username= "admin", password= "secret")
-        self.create_contact(wd, Contact(firstname= "", lastname= "", company= "", address= "", mobile= "", nickname= "", title= ""))
-        self.check_and_logout(wd)
+        self.open_home_page()
+        self.login(username= "admin", password= "secret")
+        self.create_contact(Contact(firstname= "", lastname= "", company= "", address= "", mobile= "", nickname= "", title= ""))
+        self.check_and_logout()
 
 
-    def check_and_logout(self, wd):
+    def check_and_logout(self):
         # return to main page, logout
+        wd = self.wd
         wd.get("http://localhost/addressbook/index.php")
         wd.find_element(By.LINK_TEXT, "Logout").click()
 
-    def create_contact(self, wd, contact):
+    def create_contact(self, contact):
         # create contact
+        wd = self.wd
         wd.find_element(By.LINK_TEXT, "add new").click()
         wd.get("http://localhost/addressbook/edit.php")
         wd.find_element(By.NAME, "firstname").click()
@@ -64,9 +64,10 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(By.NAME, "title").send_keys(contact.title)
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[20]").click()
 
-    def login(self, wd, username, password):
+    def login(self, username, password):
         # login
-        self.open_home_page(wd)
+        wd = self.wd
+        self.open_home_page()
         wd.find_element(By.NAME, "user").click()
         wd.find_element(By.NAME, "user").clear()
         wd.find_element(By.NAME, "user").send_keys(username)
@@ -76,10 +77,12 @@ class TestAddContact(unittest.TestCase):
 
 
     def userName(self):
+        wd = self.wd
         return "admin"
 
-    def open_home_page(self, wd):
+    def open_home_page(self):
         # open home page
+        wd = self.wd
         wd.get("http://localhost/addressbook/index.php")
 
     def is_element_present(self, how, what):
@@ -109,6 +112,7 @@ class TestAddContact(unittest.TestCase):
             self.accept_next_alert = True
 
     def tearDown(self):
+        wd = self.wd
         self.wd.quit()
 
 
