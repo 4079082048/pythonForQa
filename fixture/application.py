@@ -1,12 +1,16 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from fixture.session import SessionHelper
 
 __author__ = 'Sofia'
+
+
 
 class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
+        self.session = SessionHelper(self)
 
 
     def return_to_group_page(self):
@@ -14,12 +18,6 @@ class Application:
         wd = self.wd
         wd.get("http://localhost/addressbook/group.php")
 
-
-    def logout(self):
-        wd = self.wd
-        wd.find_element(By.LINK_TEXT, "Logout").click()
-        #wd.find_element(By.NAME, "user").clear()
-        #wd.find_element(By.NAME, "user").send_keys("admin")
 
     def submit_group_create(self):
         wd = self.wd
@@ -45,17 +43,6 @@ class Application:
         wd.find_element(By.NAME, "group_footer").send_keys(group.footer)
         wd.find_element(By.NAME, "group_name").click()
 
-
-    def login(self, username, password):
-        #  login
-        wd = self.wd
-        self.open_home_page()
-        wd.find_element(By.NAME, "user").click()
-        wd.find_element(By.NAME, "user").clear()
-        wd.find_element(By.NAME, "user").send_keys(username)
-        wd.find_element(By.NAME, "pass").clear()
-        wd.find_element(By.NAME, "pass").send_keys(password)
-        wd.find_element(By.XPATH, "//input[@value='Login']").click()
 
     def open_home_page(self):
         wd = self.wd
@@ -94,12 +81,10 @@ class Application:
         wd = self.wd
         return "admin"
 
-    def check_and_logout(self):
-        # return to main page, logout
+    def check_main_page(self):
+        # return to main page
         wd = self.wd
         wd.get("http://localhost/addressbook/index.php")
-        wd.find_element(By.LINK_TEXT, "Logout").click()
-
 
 
     def destroy(self):
