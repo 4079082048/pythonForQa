@@ -13,6 +13,10 @@ class Application:
         # return to group page
         wd = self.wd
         wd.get("http://localhost/addressbook/group.php")
+
+
+    def logout(self):
+        wd = self.wd
         wd.find_element(By.LINK_TEXT, "Logout").click()
         #wd.find_element(By.NAME, "user").clear()
         #wd.find_element(By.NAME, "user").send_keys("admin")
@@ -40,7 +44,7 @@ class Application:
         wd.find_element(By.NAME, "group_footer").clear()
         wd.find_element(By.NAME, "group_footer").send_keys(group.footer)
         wd.find_element(By.NAME, "group_name").click()
-        self.return_to_group_page()
+
 
     def login(self, username, password):
         #  login
