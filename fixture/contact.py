@@ -11,7 +11,7 @@ class ContactHelper():
         wd = self.app.wd
         wd.get("http://localhost/addressbook/index.php")
 
-    def create_contact(self, contact):
+    def create(self, contact):
         # create contact
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "add new").click()

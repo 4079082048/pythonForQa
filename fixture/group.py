@@ -13,7 +13,7 @@ class GroupHelper():
         wd.get("http://localhost/addressbook/group.php")
 
 
-    def submit_group_create(self):
+    def submit_creation(self):
         wd = self.app.wd
         wd.find_element(By.NAME, "submit").click()
 
@@ -22,7 +22,7 @@ class GroupHelper():
         wd = self.app.wd
         wd.get("http://localhost/addressbook/group.php")
 
-    def fill_group_form(self, group):
+    def fill_form(self, group):
         # fill group
         wd = self.app.wd
         self.open_group_page()
