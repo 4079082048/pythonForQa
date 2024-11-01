@@ -47,3 +47,12 @@ class ContactHelper():
         # return to main page
         wd = self.app.wd
         wd.get("http://localhost/addressbook/index.php")
+
+    def test_del_first_contact(self):
+        wd = self.app.wd
+        self.open_home_page()
+        # select 1st
+        wd.find_element(By.NAME, "").click()
+        # submit deletion
+        wd.find_element(By.NAME, "").click()
+        self.check_main_page()
