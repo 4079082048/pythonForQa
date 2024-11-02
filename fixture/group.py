@@ -41,11 +41,11 @@ class GroupHelper():
         wd = self.app.wd
         wd.get("http://localhost/addressbook/index.php")
 
-    def test_del_first_group(self):
+    def del_first_group(self):
         wd = self.app.wd
         self.open_group_page()
         # select 1st
-        wd.find_element(By.NAME, "").click()
+        wd.find_element(By.NAME, "selected[]").click()
         # submit deletion
-        wd.find_element(By.NAME, "").click()
+        wd.find_element(By.NAME, "delete").click()
         self.open_group_page()
