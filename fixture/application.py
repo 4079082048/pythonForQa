@@ -17,8 +17,6 @@ class Application:
         self.contact = ContactHelper(self)
 
 
-
-
     def destroy(self):
         self.wd.quit()
 
