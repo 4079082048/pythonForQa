@@ -2,10 +2,9 @@
 from selenium.webdriver.common.by import By
 __author__ = 'Sofia'
 
-class GroupHelper():
+class GroupHelper:
     def __init__(self, app):
         self.app = app
-
 
     def return_to_group_page(self):
         # return to group page
@@ -48,4 +47,16 @@ class GroupHelper():
         wd.find_element(By.NAME, "selected[]").click()
         # submit deletion
         wd.find_element(By.NAME, "delete").click()
+        self.open_group_page()
+
+    def edit_group(self, group):
+        wd = self.app.wd
+        self.open_group_page()
+        # select 1st group
+        wd.find_element(By.NAME, "selected[]").click()
+        # edit_first_group
+        wd.find_element(By.NAME, "edit").click()
+        wd.find_element(By.NAME, "group_header").clear()
+        wd.find_element(By.NAME, "group_header").send_keys(group.header)
+        wd.find_element(By.NAME, "update").click()
         self.open_group_page()
