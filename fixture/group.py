@@ -67,6 +67,4 @@ class GroupHelper:
         self.fill_group_form(new_group_data)
         #submit
         wd.find_element(By.NAME, "update").click()
-
-
         self.open_group_page()
