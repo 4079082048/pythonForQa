@@ -16,26 +16,7 @@ class ContactHelper():
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "add new").click()
         wd.get("http://localhost/addressbook/edit.php")
-        wd.find_element(By.NAME, "firstname").click()
-        wd.find_element(By.NAME, "firstname").clear()
-        wd.find_element(By.NAME, "firstname").send_keys(contact.firstname)
-        wd.find_element(By.NAME, "lastname").clear()
-        wd.find_element(By.NAME, "lastname").send_keys(contact.lastname)
-        wd.find_element(By.NAME, "address").click()
-        wd.find_element(By.NAME, "company").click()
-        wd.find_element(By.NAME, "company").clear()
-        wd.find_element(By.NAME, "company").send_keys(contact.company)
-        wd.find_element(By.NAME, "address").click()
-        wd.find_element(By.NAME, "address").clear()
-        wd.find_element(By.NAME, "address").send_keys(contact.address)
-        wd.find_element(By.NAME, "mobile").click()
-        wd.find_element(By.NAME, "mobile").send_keys(contact.mobile)
-        wd.find_element(By.NAME, "nickname").click()
-        wd.find_element(By.NAME, "nickname").clear()
-        wd.find_element(By.NAME, "nickname").send_keys(contact.nickname)
-        wd.find_element(By.NAME, "title").click()
-        wd.find_element(By.NAME, "title").clear()
-        wd.find_element(By.NAME, "title").send_keys(contact.title)
+        self.fill_contact_data(contact, wd)
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[20]").click()
 
 
@@ -64,7 +45,12 @@ class ContactHelper():
         wd.find_element(By.NAME, "selected[]").click()
         # edit contact
         wd.find_element(By.XPATH, "//a/img[@title='Edit']/parent::a").click()
-        #wd.find_element(By.CSS_SELECTOR, '[title="Edit"]')
+        self.fill_contact_data(contact, wd)
+        #submit contact update
+        wd.find_element(By.NAME, 'update').click()
+        self.check_main_page()
+
+    def fill_contact_data(self, contact, wd):
         wd.find_element(By.NAME, "firstname").click()
         wd.find_element(By.NAME, "firstname").clear()
         wd.find_element(By.NAME, "firstname").send_keys(contact.firstname)
@@ -85,6 +71,3 @@ class ContactHelper():
         wd.find_element(By.NAME, "title").click()
         wd.find_element(By.NAME, "title").clear()
         wd.find_element(By.NAME, "title").send_keys(contact.title)
-        #submit contact update
-        wd.find_element(By.NAME, 'update').click()
-        self.check_main_page()
