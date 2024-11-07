@@ -31,8 +31,7 @@ class Application:
        try:
            self.wd.current_url
            return True
-       except WebDriverException as e:
-           print(f"Ошибка WebDriver: {e}")
+       except:
            return False
 
 
