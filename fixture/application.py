@@ -1,5 +1,5 @@
 from selenium import webdriver
-
+from selenium.common.exceptions import WebDriverException
 from fixture.group import GroupHelper
 from fixture.session import SessionHelper
 from fixture.contact import ContactHelper
@@ -12,6 +12,7 @@ class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(5)
+        self.open_home_page()
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
@@ -24,12 +25,14 @@ class Application:
     def destroy(self):
         self.wd.quit()
 
-    def is_valid(self):
-        try:
-            self.wd.current_url
-            return True
-        except:
-            return False
 
+    @property
+    def is_valid(self):
+       try:
+           self.wd.current_url
+           return True
+       except WebDriverException as e:
+           print(f"Ошибка WebDriver: {e}")
+           return False
 
 
