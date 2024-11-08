@@ -10,6 +10,7 @@ __author__ = 'Sofia'
 
 class Application:
     def __init__(self):
+        self.current_url = None
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(5)
         self.open_home_page()
@@ -26,12 +27,12 @@ class Application:
         self.wd.quit()
 
 
-    @property
+
     def is_valid(self):
-       try:
-           self.wd.current_url
-           return True
-       except:
-           return False
+        try:
+            self.current_url
+            return True
+        except WebDriverException:  # Лучше указывать конкретное исключение
+            return False
 
 
