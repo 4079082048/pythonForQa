@@ -19,6 +19,8 @@ class ContactHelper():
         self.fill_contact_data(new_contact_data)
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[20]").click()
 
+    pass
+
 
     def username(self):
         wd = self.app.wd

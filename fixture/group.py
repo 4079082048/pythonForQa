@@ -68,3 +68,6 @@ class GroupHelper:
         #submit
         wd.find_element(By.NAME, "update").click()
         self.open_group_page()
+
+
+    pass
