@@ -7,9 +7,14 @@ class ContactHelper():
     def __init__(self, app):
         self.app = app
 
-    #def open_home_page(self):
+    #def open_home_page1(self):
     #    wd = self.app.wd
     #    wd.get("http://localhost/addressbook/index.php")
+
+    #def open_home_page(self):
+    #    wd = self.app.wd
+    #    if not (wd.current_url.endswith("index.php") > 0):
+     #       wd.get("http://localhost/addressbook/index.php")
 
     def create(self, new_contact_data):
         # create contact
@@ -32,7 +37,7 @@ class ContactHelper():
 
     def del_first_contact(self):
         wd = self.app.wd
-        self.open_home_page()
+        #self.app.open_home_page()
         self.select_first_contact()
         # submit deletion
         wd.find_element(By.CSS_SELECTOR, '[value="Delete"]')
@@ -44,7 +49,7 @@ class ContactHelper():
 
     def edit_first_contact(self, new_contact_data):
         wd = self.app.wd
-        self.open_home_page()
+        self.app.open_home_page()
         self.select_first_contact()
         # edit contact
         wd.find_element(By.XPATH, "//a/img[@title='Edit']/parent::a").click()
@@ -73,5 +78,5 @@ class ContactHelper():
 
     def count(self):
         wd = self.app.wd
-        self.open_home_page()
+        self.app.open_home_page()
         return len(wd.find_elements(By.NAME, "selected[]"))
