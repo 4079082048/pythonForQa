@@ -53,6 +53,7 @@ class GroupHelper:
         wd.find_element(By.NAME, "delete").click()
         self.open_group_page()
 
+
     def select_first_group(self):
         wd = self.app.wd
         wd.find_element(By.NAME, "selected[]").click()
@@ -70,4 +71,7 @@ class GroupHelper:
         self.open_group_page()
 
 
-    pass
+    def count(self):
+        wd = self.app.wd
+        self.open_group_page()
+        return len(wd.find_elements(By.NAME, "selected[]"))
