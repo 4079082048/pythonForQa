@@ -14,7 +14,6 @@ class SessionHelper:
         #  login
         wd = self.app.wd
         self.app.open_home_page()
-        #WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "user")))
         wd.find_element(By.NAME, "user").click()
         wd.find_element(By.NAME, "user").clear()
         wd.find_element(By.NAME, "user").send_keys(username)
@@ -26,9 +25,7 @@ class SessionHelper:
     def logout(self):
         wd = self.app.wd
         # Ожидание появления элемента "Logout"
-        #WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "Logout")))
         wd.find_element(By.LINK_TEXT, "Logout").click()
-        #WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "user")))
         wd.find_element(By.NAME, "user").click()
 
     def ensure_logout(self):
@@ -38,7 +35,6 @@ class SessionHelper:
 
     def is_logged_in(self):
         wd = self.app.wd
-        #return len(wd.find_element(By.LINK_TEXT, "Logout")) > 0
         return len(wd.find_elements(By.XPATH, "/html/body/div/div[1]/form/a")) > 0
 
     def ensure_login(self, username, password):

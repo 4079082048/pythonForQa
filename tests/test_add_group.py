@@ -14,6 +14,6 @@ def test_add_empty_group(app):
         app.group.fill_form(Group(name="", header="", footer=""))
         app.group.submit_creation()
 
-pass
+
 
 

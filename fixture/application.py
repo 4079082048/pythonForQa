@@ -27,7 +27,6 @@ class Application:
         self.wd.quit()
 
 
-
     def is_valid(self):
         try:
             self.current_url

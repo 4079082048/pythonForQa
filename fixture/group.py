@@ -19,7 +19,8 @@ class GroupHelper:
 
     def open_group_page(self):
         wd = self.app.wd
-        wd.get("http://localhost/addressbook/group.php")
+        if not (wd.current_url.endswith("group.php") and len(wd.find_elements(By.NAME, "new")) > 0):
+            wd.find_element(By.LINK_TEXT, "groups").click()
 
     def fill_form(self, group):
         wd = self.app.wd
@@ -41,13 +42,13 @@ class GroupHelper:
             wd.find_element(By.NAME, field_name).clear()
             wd.find_element(By.NAME, field_name).send_keys(text)
 
-    def open_home_page(self):
-        wd = self.app.wd
-        wd.get("http://localhost/addressbook/index.php")
+    #def open_home_page(self):
+    #    wd = self.app.wd
+    #    wd.get("http://localhost/addressbook/index.php")
 
     def del_first_group(self):
         wd = self.app.wd
-        self.open_group_page()
+        #self.open_group_page()
         self.select_first_group()
         # submit deletion
         wd.find_element(By.NAME, "delete").click()
@@ -71,7 +72,8 @@ class GroupHelper:
         self.open_group_page()
 
 
-    def count(self):
+    def count_g(self):
         wd = self.app.wd
         self.open_group_page()
         return len(wd.find_elements(By.NAME, "selected[]"))
+
