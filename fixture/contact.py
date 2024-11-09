@@ -7,9 +7,9 @@ class ContactHelper():
     def __init__(self, app):
         self.app = app
 
-    def open_home_page(self):
-        wd = self.app.wd
-        wd.get("http://localhost/addressbook/index.php")
+    #def open_home_page(self):
+    #    wd = self.app.wd
+    #    wd.get("http://localhost/addressbook/index.php")
 
     def create(self, new_contact_data):
         # create contact
@@ -19,7 +19,6 @@ class ContactHelper():
         self.fill_contact_data(new_contact_data)
         wd.find_element(By.XPATH, "//div[@id='content']/form/input[20]").click()
 
-    pass
 
 
     def username(self):
