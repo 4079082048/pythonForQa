@@ -4,16 +4,13 @@ from model.contact import Contact
 
 def test_edit_contact_firstname(app):
         app.contact.open_home_page()
-        #app.session.login(username="admin", password="secret")
+        if app.contact.count() == 0:
+                app.contact.create(Contact(firstname="TestCount2", lastname="TestCountZolotova2"))
         app.contact.edit_first_contact(Contact(firstname="Ivanna"))
-        #app.session.logout()
 
 
 def test_edit_contact_lastname(app):
         app.contact.open_home_page()
-        #app.session.login(username="admin", password="secret")
+        if app.contact.count() == 0:
+                app.contact.create(Contact(firstname="TestCount2", lastname="TestCountZolotova2"))
         app.contact.edit_first_contact(Contact(lastname="Gladisheva"))
-        app.session.logout()
-
-
-pass

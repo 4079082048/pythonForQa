@@ -71,3 +71,8 @@ class ContactHelper():
             wd.find_element(By.NAME, field_name).click()
             wd.find_element(By.NAME, field_name).clear()
             wd.find_element(By.NAME, field_name).send_keys(text)
+
+    def count(self):
+        wd = self.app.wd
+        self.open_home_page()
+        return len(wd.find_elements(By.NAME, "selected[]"))
