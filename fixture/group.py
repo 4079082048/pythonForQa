@@ -1,5 +1,7 @@
+from tokenize import group
 
 from selenium.webdriver.common.by import By
+from model.group import Group
 __author__ = 'Sofia'
 
 class GroupHelper:
@@ -77,3 +79,14 @@ class GroupHelper:
         self.open_group_page()
         return len(wd.find_elements(By.NAME, "selected[]"))
 
+    @property
+    def get_group_list(self):
+        wd = self.app.wd
+        self.open_group_page()
+        groups = []
+        for element in wd.find_elements(By.CSS_SELECTOR, "span.groups"):
+            text = element.text
+            id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+            #id = element.find_element()
+            groups.append(Group(name=text, id=id))
+        return groups
