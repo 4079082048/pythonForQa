@@ -34,9 +34,7 @@ class Application:
 
     def is_valid(self):
         try:
-            self.current_url
+            self.wd.current_url
             return True
-        except WebDriverException:  # Лучше указывать конкретное исключение
+        except:
             return False
-
-

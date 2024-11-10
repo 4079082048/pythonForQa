@@ -15,4 +15,4 @@ def test_edit_contact_lastname(app):
                 app.contact.create(Contact(firstname="TestCount2", lastname="TestCountZolotova2"))
         app.contact.edit_first_contact(Contact(lastname="Gladisheva"))
 
- pass
+
