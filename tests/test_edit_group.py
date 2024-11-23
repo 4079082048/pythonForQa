@@ -1,19 +1,23 @@
+from operator import index
+from random import randrange
 from tokenize import group
 
 from model.group import Group
+from random import randrange
 from  fixture.application import Application
 
 
 def test_edit_group_name(app):
+        if app.group.count_g() == 0:
+                app.group.fill_group_form(Group(name="testCreatedToModify"))
         old_groups = app.group.get_group_list()
-        group = Group(name="testCreatedToModify")
-        group.id = old_groups[0].id #remember id of the group
-        #if app.group.count_g() == 0:
-        #        app.group.fill_group_form(group)
-        app.group.edit_first_group(group)
+        group = Group(name="!Name", header="HeaderNew", footer="NewFooter")
+        index = randrange(len(old_groups))
+        group.id = old_groups[index].id #remember id of the group
+        app.group.edit_group_by_index(index, group)
+        assert len(old_groups) ==  app.group.count_g()
         new_groups = app.group.get_group_list()
-        assert len(old_groups) == len(new_groups)
-        old_groups[0] = group
+        old_groups[index] = group
         assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
         app.session.logout()
 
