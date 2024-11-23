@@ -29,27 +29,37 @@ class ContactHelper():
         wd.get("http://localhost/addressbook/index.php")
 
     def del_first_contact(self):
+        self.del_contact_by_index(0)
+
+
+    def del_contact_by_index(self, index):
         wd = self.app.wd
-        #self.app.open_home_page()
-        self.select_first_contact()
-        # submit deletion
-        wd.find_element(By.CSS_SELECTOR, '[value="Delete"]')
-        self.check_main_page()
+        self.app.open_home_page()
+        wd.find_elements(By.NAME, "selected[]")[index].click()
+        wd.find_element(By.XPATH, "//input[@value='Delete']").click()
+        #self.cont_cache = None
+
+    def count_contacts(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        return len(wd.find_elements(By.NAME, "selected[]"))
 
     def select_first_contact(self):
         wd = self.app.wd
         wd.find_element(By.NAME, "selected[]").click()
 
+
     def edit_first_contact(self, new_contact_data):
         wd = self.app.wd
-        self.app.open_home_page()
+        #self.app.open_home_page()
         self.select_first_contact()
         # edit contact
         wd.find_element(By.XPATH, "//a/img[@title='Edit']/parent::a").click()
         self.fill_contact_data(new_contact_data)
         #submit contact update
         wd.find_element(By.NAME, 'update').click()
-        self.check_main_page()
+        #self.check_main_page()
+
 
     def fill_contact_data(self, contact):
         #wd = self.app.wd

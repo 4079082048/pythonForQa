@@ -9,6 +9,7 @@ def test_edit_contact_firstname(app):
         app.contact.edit_first_contact(Contact(firstname="Ivanna"))
 
 
+
 def test_edit_contact_lastname(app):
         app.open_home_page()
         if app.contact.count() == 0:
