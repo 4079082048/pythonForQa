@@ -1,20 +1,12 @@
 from selenium.webdriver.common.by import By
-
-__author__ = 'Sofia'
+from model.contact import Contact
+from sys import maxsize
 
 
 class ContactHelper():
     def __init__(self, app):
         self.app = app
 
-    #def open_home_page1(self):
-    #    wd = self.app.wd
-    #    wd.get("http://localhost/addressbook/index.php")
-
-    #def open_home_page(self):
-    #    wd = self.app.wd
-    #    if not (wd.current_url.endswith("index.php") > 0):
-     #       wd.get("http://localhost/addressbook/index.php")
 
     def create(self, new_contact_data):
         # create contact
@@ -80,3 +72,35 @@ class ContactHelper():
         wd = self.app.wd
         self.app.open_home_page()
         return len(wd.find_elements(By.NAME, "selected[]"))
+
+
+
+    def get_contact_list1(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        contacts = []
+        for element in wd.find_elements(By.NAME, "entry"):
+            cells = element.find_element(By.NAME, "td")
+            lastname = cells[1].text
+            firstname = cells[2].text
+            id = element.find_elements(By.NAME, "selected[]").get_attribute("value")
+            contacts.append(Contact(lastname=lastname, firstname=firstname, id=id))
+        return contacts
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        contacts = []
+        for element in wd.find_elements(By.NAME, "entry"):
+            cells = element.find_elements(By.TAG_NAME, "td")  # Use TAG_NAME to get all cells
+            lastname = cells[1].text
+            firstname = cells[2].text
+            id = element.find_element(By.NAME, "selected[]").get_attribute("value")  # Use find_element
+            contacts.append(Contact(lastname=lastname, firstname=firstname, id=id))
+        return contacts
+
+    def id_or_max(gr):
+        if gr.id:
+            return int(gr.id)
+        else:
+            return maxsize
