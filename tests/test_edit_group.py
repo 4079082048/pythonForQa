@@ -1,10 +1,5 @@
-from operator import index
-from random import randrange
-from tokenize import group
-
 from model.group import Group
 from random import randrange
-from  fixture.application import Application
 
 
 def test_edit_group_name(app):
