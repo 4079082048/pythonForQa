@@ -49,18 +49,36 @@ class GroupHelper:
 
 
     def del_first_group(self):
+        self.del_group_by_index(0)
+
+    def del_group_by_index(self, index):
         wd = self.app.wd
-        #self.open_group_page()
-        self.select_first_group()
+        self.open_group_page()
+        wd.find_elements(By.NAME, "selected[]")[index].click()
         # submit deletion
         wd.find_element(By.NAME, "delete").click()
         self.open_group_page()
         self.group_cache = None
 
+    def del_gr_by_index(self, index):
+        wd = self.app.wd
+        self.open_group_page()
+        # select group
+        wd.find_elements_by_name("selected[]")[index].click()
+        # submit delete group
+        wd.find_element_by_name("delete").click()
+        # return to group page
+        self.return_to_group_page()
+        # кэш теряет актуалность
+        self.group_cache = None
 
     def select_first_group(self):
         wd = self.app.wd
         wd.find_element(By.NAME, "selected[]").click()
+
+    def select_group_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements(By.NAME, "selected[]")[index].click()
 
     def edit_first_group(self, new_group_data):
         wd = self.app.wd
