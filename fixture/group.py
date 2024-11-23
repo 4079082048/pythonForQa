@@ -29,12 +29,14 @@ class GroupHelper:
         self.open_group_page()
         wd.find_element(By.NAME, "new").click()
         self.fill_group_form(group)
+        self.group_cache = None #?
 
     def fill_group_form(self, group):
         wd = self.app.wd
         self.change_filed_value("group_name", group.name)
         self.change_filed_value("group_header", group.header)
         self.change_filed_value("group_footer", group.footer)
+        self.group_cache = None
 
 
     def change_filed_value(self, field_name, text):
@@ -43,6 +45,7 @@ class GroupHelper:
             wd.find_element(By.NAME, field_name).click()
             wd.find_element(By.NAME, field_name).clear()
             wd.find_element(By.NAME, field_name).send_keys(text)
+        self.group_cache = None
 
 
     def del_first_group(self):
@@ -52,6 +55,7 @@ class GroupHelper:
         # submit deletion
         wd.find_element(By.NAME, "delete").click()
         self.open_group_page()
+        self.group_cache = None
 
 
     def select_first_group(self):
@@ -76,12 +80,15 @@ class GroupHelper:
         self.open_group_page()
         return len(wd.find_elements(By.NAME, "selected[]"))
 
+    group_cache = None
+
     def get_group_list(self):
-        wd = self.app.wd
-        self.open_group_page()
-        groups = []
-        for element in wd.find_elements(By.CSS_SELECTOR, "span.group"):
-            text = element.text
-            id = element.find_element(By.NAME, "selected[]").get_attribute("value")
-            groups.append(Group(name=text, id=id))
-        return groups
+        if self.group_cache is None: #if cache is empty - load
+            wd = self.app.wd
+            self.open_group_page()
+            self.group_cache = []
+            for element in wd.find_elements(By.CSS_SELECTOR, "span.group"):
+                text = element.text
+                id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+                self.group_cache.append(Group(name=text, id=id))
+        return list(self.group_cache) #back copy list
