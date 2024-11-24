@@ -15,13 +15,12 @@ def test_del_some_contact(app):
     #del first contact in the list
     print(f"Количество контактов до удаления: {len(old_contacts)}")
     app.contact.del_contact_by_index(index)
-    app.contact.alert_accept()
+    #app.contact.alert_accept()
     print(f"Количество контактов после удаления: {app.contact.count_contacts()}")
     #assert len(old_contacts) - 1 == app.contact.count_contacts()
     import time
     time.sleep(1)
     assert app.contact.count_contacts() == len(old_contacts) - 1
-
     new_contacts = app.contact.get_contact_list()
     #del first contact in the old list
     old_contacts[index:index + 1] = []

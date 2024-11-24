@@ -39,10 +39,21 @@ class ContactHelper():
     def del_contact_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
-        self.select_contact_by_index(index)
+        #self.select_contact_by_index(index)
         wd.find_elements(By.NAME, "selected[]")[index].click()
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
+        # Принять предупреждение
+        wd.switch_to.alert.accept()
+        # Явное ожидание появления сообщения об успешном удалении
+        try:
+            WebDriverWait(wd, 10).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, "div.msgbox"))
+            )
+        except TimeoutException:
+            print("Сообщение об успешном удалении не появилось за отведенное время.")
+        #self.app.contact.alert_accept()
         self.contact_cache = None
+
 
 
     def count_contacts(self):
