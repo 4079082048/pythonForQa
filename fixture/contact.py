@@ -126,3 +126,4 @@ class ContactHelper():
             )
         except TimeoutException:
            print("Сообщение об успешном удалении не появилось за отведенное время.")
+
