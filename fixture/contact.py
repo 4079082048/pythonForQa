@@ -55,16 +55,20 @@ class ContactHelper():
         wd = self.app.wd
         wd.find_elements(By.NAME, "selected[]")[index].click()
 
-    def edit_first_contact(self, new_contact_data):
+    def edit_first_contact(self):
+        self.edit_contact_by_index(0)
+
+    def edit_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
-        #self.app.open_home_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         # edit contact
         wd.find_element(By.XPATH, "//a/img[@title='Edit']/parent::a").click()
         self.fill_contact_data(new_contact_data)
         #submit contact update
         wd.find_element(By.NAME, 'update').click()
+        self.app.open_home_page()
         self.contact_cache = None
+
 
 
     def fill_contact_data(self, contact):
@@ -103,4 +107,5 @@ class ContactHelper():
                 firstname = cells[2].text
                 id = element.find_element(By.NAME, "selected[]").get_attribute("value")
                 self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id))
+
         return list(self.contact_cache)
