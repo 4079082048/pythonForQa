@@ -4,6 +4,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from model.contact import Contact
+import re
 __author__ = 'Sofia'
 
 
@@ -82,7 +83,38 @@ class ContactHelper():
         self.app.open_home_page()
         self.contact_cache = None
 
+    def open_contact_to_edit_by_index(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_elements(By.XPATH, "//img[@alt='Edit']")[index].click()
 
+    def open_contact_view_by_index(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_elements(By.XPATH, "//img[@alt='Details']")[index].click()
+
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_contact_to_edit_by_index(index)
+        firstname = wd.find_element(By.NAME, "firstname").get_attribute("value")
+        lastname = wd.find_element(By.NAME, "lastname").get_attribute("value")
+        id = wd.find_element(By.NAME, "id").get_attribute("value")
+        homephone = wd.find_element(By.NAME, "home").get_attribute("value")
+        workphone = wd.find_element(By.NAME, "work").get_attribute("value")
+        mobilephone = wd.find_element(By.NAME, "mobile").get_attribute("value")
+        fax = wd.find_element(By.NAME, "fax").get_attribute("value")
+        return Contact(firstname= firstname, lastname= lastname, id = id, homephone= homephone, workphone= workphone, mobilephone= mobilephone, fax= fax)
+
+    def get_contact_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        text = wd.find_element(By.ID, "content").text
+        print(text)
+        homephone = re.search("H: (.*)", text).group(1)
+        mobilephone = re.search("M: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+        fax = re.search("F: (.*)", text).group(1)
+        return Contact(homephone=homephone,  mobilephone=mobilephone, workphone=workphone,fax=fax)
 
     def fill_contact_data(self, contact):
         #wd = self.app.wd
@@ -118,9 +150,10 @@ class ContactHelper():
                 cells = element.find_elements(By.TAG_NAME, "td")
                 lastname = cells[1].text
                 firstname = cells[2].text
-                id = element.find_element(By.NAME, "selected[]").get_attribute("value")
-                self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id))
-
+                #id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+                id = cells[0].find_element(By.NAME, "selected[]").get_attribute("value")
+                all_phones = cells[5].text.splitlines()
+                self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id, homephone= all_phones[0], mobilephone= all_phones[1], workphone= all_phones[2])) #, fax= all_phones[3]
         return list(self.contact_cache)
 
 
