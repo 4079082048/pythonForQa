@@ -13,13 +13,13 @@ def test_del_some_contact(app):
     index =  randrange(len(old_contacts))
     #del first contact in the list
     app.contact.del_contact_by_index(index)
+    app.contact.alert_accept()
     assert len(old_contacts) - 1 == app.contact.count_contacts()
-    wd.switch_to.alert.accept()
-    # get new contact list
     new_contacts = app.contact.get_contact_list()
     #del first contact in the old list
     old_contacts[index:index + 1] = []
     assert old_contacts == new_contacts
+
 
 
 

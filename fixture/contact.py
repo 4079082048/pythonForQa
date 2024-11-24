@@ -1,3 +1,7 @@
+from lib2to3.pgen2 import driver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from model.contact import Contact
 __author__ = 'Sofia'
@@ -109,3 +113,16 @@ class ContactHelper():
                 self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id))
 
         return list(self.contact_cache)
+
+
+    def alert_accept(self):
+        wd = self.app.wd
+    # Принять предупреждение
+        wd.switch_to.alert.accept()
+    # Явное ожидание появления сообщения об успешном удалении
+        try:
+            WebDriverWait(wd, 10).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "div.msgbox"))
+            )
+        except TimeoutException:
+           print("Сообщение об успешном удалении не появилось за отведенное время.")
