@@ -1,4 +1,5 @@
 __author__ = 'Sofia'
+
 from random import randrange
 from model.contact import Contact
 
@@ -12,9 +13,15 @@ def test_del_some_contact(app):
     old_contacts = app.contact.get_contact_list()
     index =  randrange(len(old_contacts))
     #del first contact in the list
+    print(f"Количество контактов до удаления: {len(old_contacts)}")
     app.contact.del_contact_by_index(index)
     app.contact.alert_accept()
-    assert len(old_contacts) - 1 == app.contact.count_contacts()
+    print(f"Количество контактов после удаления: {app.contact.count_contacts()}")
+    #assert len(old_contacts) - 1 == app.contact.count_contacts()
+    import time
+    time.sleep(1)
+    assert app.contact.count_contacts() == len(old_contacts) - 1
+
     new_contacts = app.contact.get_contact_list()
     #del first contact in the old list
     old_contacts[index:index + 1] = []
