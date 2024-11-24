@@ -19,7 +19,7 @@ class ContactHelper():
         wd.find_element(By.LINK_TEXT, "add new").click()
         wd.get("http://localhost/addressbook/edit.php")
         self.fill_contact_data(new_contact_data)
-        wd.find_element(By.XPATH, "//div[@id='content']/form/input[20]").click()
+        wd.find_element(By.XPATH, '//div[@id="content"]/form/input[20]').click()
 
 
 
@@ -41,7 +41,7 @@ class ContactHelper():
         self.app.open_home_page()
         #self.select_contact_by_index(index)
         wd.find_elements(By.NAME, "selected[]")[index].click()
-        wd.find_element(By.XPATH, "//input[@value='Delete']").click()
+        wd.find_element(By.XPATH, '//input[@value="Delete"]').click()
         # Принять предупреждение
         # Явное ожидание появления сообщения об успешном удалении
         try:
@@ -75,7 +75,7 @@ class ContactHelper():
         wd = self.app.wd
         self.select_contact_by_index(index)
         # edit contact
-        wd.find_element(By.XPATH, "//a/img[@title='Edit']/parent::a").click()
+        wd.find_element(By.XPATH, '//a/img[@title="Edit"]/parent::a').click()
         self.fill_contact_data(new_contact_data)
         #submit contact update
         wd.find_element(By.NAME, 'update').click()

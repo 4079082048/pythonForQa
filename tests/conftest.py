@@ -25,4 +25,3 @@ def stop(request):
     return fixture
 
 
-pass
