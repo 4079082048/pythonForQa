@@ -43,7 +43,6 @@ class ContactHelper():
         wd.find_elements(By.NAME, "selected[]")[index].click()
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         # Принять предупреждение
-        wd.switch_to.alert.accept()
         # Явное ожидание появления сообщения об успешном удалении
         try:
             WebDriverWait(wd, 10).until(
@@ -51,7 +50,6 @@ class ContactHelper():
             )
         except TimeoutException:
             print("Сообщение об успешном удалении не появилось за отведенное время.")
-        #self.app.contact.alert_accept()
         self.contact_cache = None
 
 
