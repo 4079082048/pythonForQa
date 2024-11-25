@@ -76,7 +76,7 @@ class ContactHelper():
         wd = self.app.wd
         self.select_contact_by_index(index)
         # edit contact
-        wd.find_element(By.XPATH, '//a/img[@title="Edit"]/parent::a').click()
+        wd.find_elements(By.XPATH, '//img[@alt="Edit"]')[index].click() #+[index]
         self.fill_contact_data(new_contact_data)
         #submit contact update
         wd.find_element(By.NAME, 'update').click()
