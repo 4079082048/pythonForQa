@@ -1,3 +1,5 @@
+from email.policy import default
+
 from fixture.application import Application
 
 import pytest
@@ -9,7 +11,8 @@ fixture = None
 def app(request):
     global fixture
     if fixture is None:
-        fixture = Application()
+        browser =request.config.getoption("--browser")
+        fixture = Application(browser=browser)
     else:
         if not fixture.is_valid():
             fixture = Application()
@@ -25,3 +28,5 @@ def stop(request):
     return fixture
 
 
+def pytest_addoption(parser):
+    parser.addoption("--browser", action="store", default="firefox")
