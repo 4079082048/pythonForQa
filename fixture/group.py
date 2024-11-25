@@ -8,6 +8,8 @@ class GroupHelper:
     def __init__(self, app):
         self.app = app
 
+    group_cache = None
+
     def return_to_group_page(self):
         # return to group page
         wd = self.app.wd
@@ -26,7 +28,7 @@ class GroupHelper:
 
     def fill_form(self, group):
         wd = self.app.wd
-        self.open_group_page()
+        #self.open_group_page()
         wd.find_element(By.NAME, "new").click()
         self.fill_group_form(group)
         self.group_cache = None #?
