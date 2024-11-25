@@ -3,7 +3,10 @@ from model.contact import Contact
 
 def test_add_contact(app):
     old_contacts = app.contact.get_contact_list()
-    contact = Contact(firstname="Sofia", lastname="Zolotova", company="ailet", address="Tula", mobile="89096309913", nickname="swallow", title="mem")
+    #contact = Contact(firstname="Sofia9", lastname="Zolotova", company="ailet", address="Tula", mobile="89096309913", nickname="swallow", title="mem")
+
+    contact = Contact(firstname="Sofia", lastname="Zolotova", company="ailet", address="Tula", mobile="89096309913",
+                      nickname="swallow", title="mm", homephone="3432423",workphone="000000", fax="4444", email= "s1@gmail.com", email3= "s3@gmail.com", email2= "s2@gmail.com", homepage= "www.itsasony.com" )
     app.open_home_page()
     app.contact.create(contact)
     assert len(old_contacts) + 1 == app.contact.count_contacts()

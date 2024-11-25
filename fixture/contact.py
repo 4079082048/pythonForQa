@@ -103,7 +103,13 @@ class ContactHelper():
         workphone = wd.find_element(By.NAME, "work").get_attribute("value")
         mobilephone = wd.find_element(By.NAME, "mobile").get_attribute("value")
         fax = wd.find_element(By.NAME, "fax").get_attribute("value")
-        return Contact(firstname= firstname, lastname= lastname, id = id, homephone= homephone, workphone= workphone, mobilephone= mobilephone, fax= fax)
+        email = wd.find_element(By.NAME,"email").get_attribute("value")
+        email2 = wd.find_element(By.NAME,"email2").get_attribute("value")
+        email3 = wd.find_element(By.NAME,"email3").get_attribute("value")
+        address = wd.find_element(By.NAME,"address").get_attribute("value")
+        return Contact(firstname= firstname, lastname= lastname, id = id, homephone= homephone, workphone= workphone, mobilephone= mobilephone, fax= fax, email3= email3, email2= email2, email= email, address= address)
+
+
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
@@ -114,6 +120,7 @@ class ContactHelper():
         mobilephone = re.search("M: (.*)", text).group(1)
         workphone = re.search("W: (.*)", text).group(1)
         fax = re.search("F: (.*)", text).group(1)
+
         return Contact(homephone=homephone,  mobilephone=mobilephone, workphone=workphone,fax=fax)
 
     def fill_contact_data(self, contact):
@@ -125,6 +132,14 @@ class ContactHelper():
         self.change_filed_value("mobile", contact.mobile)
         self.change_filed_value("nickname", contact.nickname)
         self.change_filed_value("title", contact.title)
+        self.change_filed_value("home", contact.homephone)
+        self.change_filed_value("work", contact.workphone)
+        self.change_filed_value("mobile", contact.mobile)
+        self.change_filed_value("fax", contact.fax)
+        self.change_filed_value("email", contact.email)
+        self.change_filed_value("email2", contact.email2)
+        self.change_filed_value("email3", contact.email3)
+        self.change_filed_value("homepage", contact.homepage)
         self.contact_cache = None
 
     def change_filed_value(self, field_name, text):
@@ -150,10 +165,10 @@ class ContactHelper():
                 cells = element.find_elements(By.TAG_NAME, "td")
                 lastname = cells[1].text
                 firstname = cells[2].text
-                #id = element.find_element(By.NAME, "selected[]").get_attribute("value")
                 id = cells[0].find_element(By.NAME, "selected[]").get_attribute("value")
                 all_phones = cells[5].text
-                self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id, all_phones_from_home_page=all_phones)) #, fax= all_phones[3]
+                all_emails = cells[4].text
+                self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id, all_phones_from_home_page=all_phones, all_emails_from_home_page=all_emails)) #, fax= all_phones[3]
         return list(self.contact_cache)
 
 
