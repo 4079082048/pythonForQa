@@ -1,4 +1,5 @@
 from email.policy import default
+from sys import base_prefix
 
 from fixture.application import Application
 
@@ -10,12 +11,13 @@ fixture = None
 @pytest.fixture
 def app(request):
     global fixture
+    browser = request.config.getoption("--browser")
+    baseUrl = request.config.getoption("--baseUrl")
     if fixture is None:
-        browser =request.config.getoption("--browser")
-        fixture = Application(browser=browser)
+        fixture = Application(browser=browser, baseUrl=baseUrl)
     else:
         if not fixture.is_valid():
-            fixture = Application()
+            fixture = Application(browser=browser, baseUrl=baseUrl)
     fixture.session.ensure_login(username="admin", password="secret")
     return fixture
 
@@ -30,3 +32,4 @@ def stop(request):
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
+    parser.addoption("--baseUrl", action="store", default="http://localhost/addressbook/")
