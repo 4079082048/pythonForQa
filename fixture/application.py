@@ -18,7 +18,7 @@ class Application:
             self.wd = webdriver.Ie()
         else:
             raise ValueError("Unrecognized browser %s" % browser)
-        #аварийное прерывание кода
+
         self.current_url = None
         #self.wd = webdriver.Firefox()
         self.wd = webdriver.Chrome()
