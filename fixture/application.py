@@ -10,7 +10,6 @@ __author__ = 'Sofia'
 
 class Application:
     def __init__(self, browser, baseUrl): #(self)
-
         if browser == "firefox":
             self.wd = webdriver.Firefox()
         elif browser == "chrome":
@@ -20,17 +19,15 @@ class Application:
         else:
             raise ValueError("Unrecognized browser %s" % browser)
         #аварийное прерывание кода
-
-
         self.current_url = None
-        self.wd = webdriver.Firefox() #self.wd = webdriver.Chrome()
+        #self.wd = webdriver.Firefox()
+        self.wd = webdriver.Chrome()
         self.wd.implicitly_wait(5)
-        self.open_home_page()
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
         self.base_url = baseUrl
-
+        self.open_home_page()
 
     def open_home_page(self):
         wd = self.wd
