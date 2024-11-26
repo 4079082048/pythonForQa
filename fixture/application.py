@@ -20,8 +20,6 @@ class Application:
             raise ValueError("Unrecognized browser %s" % browser)
 
         self.current_url = None
-        #self.wd = webdriver.Firefox()
-        self.wd = webdriver.Chrome()
         self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
