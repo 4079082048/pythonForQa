@@ -2,6 +2,18 @@
 from model.group import Group
 
 
+def test_add_group(app, data_groups): #загружать тест данные из пакета data
+        group = data_groups
+        old_groups = app.group.get_group_list() #load old list
+        app.group.fill_form(group)
+        app.group.submit_creation()
+        assert len(old_groups) + 1 == app.group.count_g() #assert two lists length
+        new_groups = app.group.get_group_list()  # load new list IF only previous assert is ok
+        old_groups.append(group)
+        assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+
+
+
 #@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
 #def test_add_group(app, group):
 #        old_groups = app.group.get_group_list() #load old list
@@ -14,16 +26,6 @@ from model.group import Group
 #        print("New groups:", new_groups)
 #        print("Group being added:", group)
 #        assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
-
-def test_add_group(app, data_groups): #загружать тест данные из пакета data
-        group = data_groups
-        old_groups = app.group.get_group_list() #load old list
-        app.group.fill_form(group)
-        app.group.submit_creation()
-        assert len(old_groups) + 1 == app.group.count_g() #assert two lists length
-        new_groups = app.group.get_group_list()  # load new list IF only previous assert is ok
-        old_groups.append(group)
-        assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 
 
