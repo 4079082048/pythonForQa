@@ -34,5 +34,5 @@ testdata = [Group(name="", header="", footer="")] + [
 ]
 
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)#склеивается путь в генератору, переход в корень проекта, относит путь к файлу параметра
-with open(file, "w") as f:
-    f.write(json.dumps(testdata, default=lambda  x: x.__dict__, indent=2)) #__dict__ хранит свойства из полей которые присваиваем в __init__
+with open(file, "w") as out:
+    out.write(json.dumps(testdata, default=lambda  x: x.__dict__, indent=2)) #__dict__ хранит свойства из полей которые присваиваем в __init__
