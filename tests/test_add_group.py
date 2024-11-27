@@ -1,17 +1,5 @@
 # -*- coding: utf-8 -*-
-from tokenize import group
-
 from model.group import Group
-import pytest
-from data.groups import constant as testdata
-
-
-#testdata = [
-#        Group(name=name, header=header, footer=footer)
-#        for name in ["", random_string("name", 10)] #пробегаем по двум значениям имени и возникают разные комбинации
-#        for header in ["", random_string("header", 20)]
-#        for footer in ["", random_string("footer", 20)]
-#]
 
 
 #@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
