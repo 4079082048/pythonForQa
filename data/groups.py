@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
+import random
+import string
 
 testdata = [
         Group(name="name1", header="header1", footer="footer1"),

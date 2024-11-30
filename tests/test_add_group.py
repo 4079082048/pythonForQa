@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
+from data.groups import testdata
 
 
-def test_add_group(app, data_groups): #загружать тест данные из пакета data
-        group = data_groups
+def test_add_group(app, json_groups): #загружать тест данные из пакета data
+        group = json_groups #переменная group получает значение в качестве параметра
         old_groups = app.group.get_group_list() #load old list
-        app.group.fill_form(group)
-        app.group.submit_creation()
+        app.group.create(group)
         assert len(old_groups) + 1 == app.group.count_g() #assert two lists length
         new_groups = app.group.get_group_list()  # load new list IF only previous assert is ok
         old_groups.append(group)

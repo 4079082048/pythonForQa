@@ -19,6 +19,7 @@ class ContactHelper():
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "add new").click()
         wd.get("http://localhost/addressbook/edit.php")
+        #wd.get(self.app.base_url)
         self.fill_contact_data(new_contact_data)
         wd.find_element(By.XPATH, '//div[@id="content"]/form/input[20]').click()
 

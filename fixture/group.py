@@ -15,10 +15,16 @@ class GroupHelper:
         wd = self.app.wd
         wd.get("http://localhost/addressbook/group.php")
 
+    def create(self, group):
+        self.fill_form(group)
+        self.submit_creation()
+        self.group_cache = None
+
 
     def submit_creation(self):
         wd = self.app.wd
         wd.find_element(By.NAME, "submit").click()
+        self.return_to_group_page()
 
 
     def open_group_page(self):
@@ -28,17 +34,18 @@ class GroupHelper:
 
     def fill_form(self, group):
         wd = self.app.wd
-        #self.open_group_page()
+        self.open_group_page()
         wd.find_element(By.NAME, "new").click()
         self.fill_group_form(group)
         self.group_cache = None #?
 
     def fill_group_form(self, group):
         wd = self.app.wd
+        #self.open_group_page()
         self.change_filed_value("group_name", group.name)
         self.change_filed_value("group_header", group.header)
         self.change_filed_value("group_footer", group.footer)
-        self.group_cache = None
+        #self.group_cache = None
 
 
     def change_filed_value(self, field_name, text):
@@ -47,7 +54,7 @@ class GroupHelper:
             wd.find_element(By.NAME, field_name).click()
             wd.find_element(By.NAME, field_name).clear()
             wd.find_element(By.NAME, field_name).send_keys(text)
-        self.group_cache = None
+        #self.group_cache = None
 
 
     def del_first_group(self):
