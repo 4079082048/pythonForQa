@@ -1,9 +1,12 @@
-import pymysql
+import pymysql.cursors
 
 connection = pymysql.connect(host="127.0.0.1", database="addressbook", user="root", password="")
 
 try:
-    # Your database operations go here
-    pass
+    # database operations go here
+    cursor = connection.cursor()
+    cursor.execute("select * from group_list")
+    for row in cursor.fetchall(): #метод вернет все что извлек в виде набора строк
+        print(row)
 finally:
     connection.close()

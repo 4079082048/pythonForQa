@@ -4,6 +4,7 @@ from fixture.application import Application
 import pytest
 import os.path
 import jsonpickle
+from fixture.db import DbFixture
 
 
 fixture = None
@@ -38,6 +39,14 @@ def stop(request):
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
+
+@pytest.fixture(scope="session")
+def db(request):
+    dbfixture = DbFixture()
+    def fin():
+        dbfixture.destroy()
+    request.addfinalizer(fin)
+    return dbfixture
 
 
 def pytest_generate_tests(metafunc): #получить инфо о тест функции
