@@ -9,6 +9,7 @@ def test_group_list(app, db): #через фикстуры app получим с
     db_list = map(clean, db.get_group_list())
     assert sorted(ui_list, key = Group.id_or_max) == sorted(db_list, key = Group.id_or_max)
 
+
 def test_contact_list(app, db): #через фикстуры app получим список из ui,а через db - из базы
     ui_list = app.contact.get_contact_list()
     def clean(contact):
