@@ -54,7 +54,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="session")
 def db(request):
-    dbfixture = DbFixture()
+    dbfixture = DbFixture(host="", name="", user="", password="" )
     def fin():
         dbfixture.destroy()
     request.addfinalizer(fin)

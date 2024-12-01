@@ -1,6 +1,7 @@
 import pymysql.cursors
 
-connection = pymysql.connect(host="127.0.0.1", database="addressbook", user="root", password="")
+# было connection = pymysql.connect(host="127.0.0.1", database="addressbook", user="root", password="")
+connection = pymysql.connect(host="127.0.0.1", name="addressbook", user="root", password="")
 
 try:
     # database operations go here
