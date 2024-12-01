@@ -17,12 +17,13 @@ class ContactHelper():
     def create(self, new_contact_data):
         # create contact
         wd = self.app.wd
+        self.app.open_home_page()
         wd.find_element(By.LINK_TEXT, "add new").click()
-        wd.get("http://localhost/addressbook/edit.php")
+        #wd.get("http://localhost/addressbook/edit.php")
         #wd.get(self.app.base_url)
         self.fill_contact_data(new_contact_data)
         wd.find_element(By.XPATH, '//div[@id="content"]/form/input[20]').click()
-
+        #self.check_main_page()
 
 
     def username(self):
@@ -32,7 +33,7 @@ class ContactHelper():
     def check_main_page(self):
         # return to main page
         wd = self.app.wd
-        wd.get("http://localhost/addressbook/index.php")
+        wd.find_element(By.LINK_TEXT, "home page").click()
 
     def del_first_contact(self):
         self.del_contact_by_index(0)

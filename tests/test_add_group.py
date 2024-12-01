@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
 from data.groups import testdata
+from fixture.application import Application
 
 
 def test_add_group(app, json_groups): #загружать тест данные из пакета data
