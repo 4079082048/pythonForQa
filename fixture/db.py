@@ -7,7 +7,7 @@ class DbFixture:
 
     def __init__(self, host, name, user, password):
         self.host = host
-        self.name = name
+        self.database = name #? database or name?
         self.user = user
         self.password = password
         self.connection = pymysql.connect(host=host, database=name, user=user, password=password)

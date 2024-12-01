@@ -37,15 +37,14 @@ def app(request):
 #            target = json.load(f)
 
 
-@pytest.fixture(scope="session", autouse=True)
-def stop(request):
+@pytest.fixture(scope="session")
+def db(request):
     db_config = load_config(request.config.getoption("--target"))['db']
     dbfixture = DbFixture(host=db_config['host'], name=db_config['name'], user=db_config['user'], password=db_config['password'])
     def fin():
-        fixture.session.ensure_logout()
-        fixture.destroy()
+        dbfixture.destroy()
     request.addfinalizer(fin)
-    return fixture
+    return dbfixture
 
 
 def pytest_addoption(parser):
