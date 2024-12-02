@@ -69,16 +69,13 @@ class GroupHelper:
         self.open_group_page()
         self.group_cache = None
 
-    def del_gr_by_index(self, index):
+    def del_group_by_id(self, id):
         wd = self.app.wd
         self.open_group_page()
-        # select group
-        wd.find_elements_by_name("selected[]")[index].click()
-        # submit delete group
-        wd.find_element_by_name("delete").click()
-        # return to group page
-        self.return_to_group_page()
-        # кэш теряет актуалность
+        self.select_group_by_id(id)
+        # submit deletion
+        wd.find_element(By.NAME, "delete").click()
+        self.open_group_page()
         self.group_cache = None
 
     def select_first_group(self):
@@ -88,6 +85,10 @@ class GroupHelper:
     def select_group_by_index(self, index):
         wd = self.app.wd
         wd.find_elements(By.NAME, "selected[]")[index].click()
+
+    def select_group_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element(By.CSS_SELECTOR, "input[value='%s']" %id).click()
 
     def edit_first_group(self):
         self.edit_group_by_index(0)
