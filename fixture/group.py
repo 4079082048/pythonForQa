@@ -13,7 +13,7 @@ class GroupHelper:
     def return_to_group_page(self):
         # return to group page
         wd = self.app.wd
-        wd.get("http://localhost/addressbook/group.php")
+        wd.find_element(By.LINK_TEXT, "groups").click()
 
     def create(self, group):
         self.fill_form(group)
