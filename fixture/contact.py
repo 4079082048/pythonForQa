@@ -105,8 +105,9 @@ class ContactHelper():
     def open_contact_edit_by_id(self, id):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_element(By.XPATH, '//a[contains(@href,"edit.php?id=%s")]' % id).click()
-
+        #wd.find_element(By.XPATH, '//a[contains(@href,"edit.php?id=%"), %id]').click()
+        wd.find_element(By.XPATH, '//td[@class="center"]/a[@href="edit.php?id=%ds"]' % id).click()
+        #//a[contains(@href, 'edit.php?id=188')]//img[contains(@alt, 'Edit')]
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
