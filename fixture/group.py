@@ -106,6 +106,15 @@ class GroupHelper:
         wd.find_element(By.NAME, "update").click()
         self.open_group_page()
 
+    def edit_group_by_id(self, id, group):
+        wd = self.app.wd
+        self.open_group_page()
+        wd.find_element(By.CSS_SELECTOR, "input[value='%s']" % id).click()
+        wd.find_element(By.NAME, "edit").click()
+        self.fill_group_form(group)
+        wd.find_element(By.NAME, "update").click()
+        self.group_cache = None
+
 
     def count_g(self):
         wd = self.app.wd
