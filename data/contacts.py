@@ -14,6 +14,7 @@ from model.contact import Contact
 from model.contact import Contact
 
 testdata = [
-        Contact(firstname="Sa", lastname="La", nickname="Ln", title="mm", company="ai", address="ad", homephone="312", mobilephone="2342342", workphone="5522", fax="23", email="d@a.com", email2="d2@a.com", email3="d3@a.com", homepage="www.a.com"),
-        Contact(firstname="Sb", lastname="Lb", nickname="Lm", title="nn", company="ia", address="da", homephone="123", mobilephone="432423", workphone="2255", fax="523", email="dr@a.com", email2="de@a.com", email3="dw@a.com", homepage="www.b.com")
+        Contact(firstname="Sa", lastname="La", nickname="Ln", title="mm", company="ai", address="ad", home
+        ="312", mobilephone="2342342", workphone="5522", fax="23", email="d@a.com", email2="d2@a.com", email3="d3@a.com", homepage="www.a.com"),
+        Contact(firstname="Sb", lastname="Lb", nickname="Lm", title="nn", company="ia", address="da", home="123", mobilephone="432423", workphone="2255", fax="523", email="dr@a.com", email2="de@a.com", email3="dw@a.com", homepage="www.b.com")
 ]

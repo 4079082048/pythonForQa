@@ -19,8 +19,6 @@ class ContactHelper():
         wd = self.app.wd
         self.app.open_home_page()
         wd.find_element(By.LINK_TEXT, "add new").click()
-        #wd.get("http://localhost/addressbook/edit.php")
-        #wd.get(self.app.base_url)
         self.fill_contact_data(new_contact_data)
         wd.find_element(By.XPATH, '//div[@id="content"]/form/input[20]').click()
         #self.check_main_page()
@@ -55,7 +53,12 @@ class ContactHelper():
             print("Сообщение об успешном удалении не появилось за отведенное время.")
         self.contact_cache = None
 
-
+    def del_contact_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element(By.CSS_SELECTOR, "input[id='%s']" % id).click()
+        wd.find_element(By.XPATH,"//input[@value='Delete']").click()
+        self.cont_cache = None
 
     def count_contacts(self):
         wd = self.app.wd
@@ -85,10 +88,24 @@ class ContactHelper():
         self.app.open_home_page()
         self.contact_cache = None
 
+    def edit_contact_by_id(self, id, contact):
+        wd = self.app.wd
+        self.open_contact_edit_by_id(id)
+        self.fill_contact_data(contact)
+        wd.find_element(By.NAME, 'update').click()
+        self.app.open_home_page()
+
+        self.cont_cache = None
+
     def open_contact_to_edit_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_elements(By.XPATH, "//img[@alt='Edit']")[index].click()
+        wd.find_elements(By.XPATH, '//img[@alt="Edit"]')[index].click()
+
+    def open_contact_edit_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element(By.XPATH, '//a[contains(@href,"edit.php?id=%s")]' % id).click()
 
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
