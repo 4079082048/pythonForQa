@@ -15,6 +15,7 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_element(By.LINK_TEXT, "groups").click()
 
+
     def create(self, group):
         self.fill_form(group)
         self.submit_creation()
