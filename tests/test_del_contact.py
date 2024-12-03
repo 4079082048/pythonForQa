@@ -2,6 +2,7 @@ __author__ = 'Sofia'
 
 from random import randrange
 from model.contact import Contact
+import random
 
 
 def test_del_some_contact(app):
@@ -27,7 +28,24 @@ def test_del_some_contact(app):
     assert old_contacts == new_contacts
 
 
-
+def test_del_some_contact_by_id(app, db):
+    wd = app.wd
+    #If no contacts - create it
+    if app.contact.count() == 0:
+        app.contact.create(Contact(firstname="TestCount", lastname="TestCountZolotova"))
+    old_contacts = db.get_contact_list()
+    contact = random.choice(old_contacts)
+    index =  randrange(len(old_contacts))
+   # удаляем контакт по id
+    app.contact.del_contact_by_id(contact.id)
+    #сравниваем старый список и счетчики контактов
+    assert len(old_contacts) - 1 == app.contact.count_contacts()
+    import time
+    time.sleep(1)
+    assert app.contact.count_contacts() == len(old_contacts) - 1
+    new_contacts = db.get_contact_list()
+    old_contacts.remove(contact)
+    assert old_contacts == new_contacts
 
 
 #def test_del_first_contact(app):
