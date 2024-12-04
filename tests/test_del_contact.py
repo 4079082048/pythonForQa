@@ -28,7 +28,7 @@ def test_del_some_contact(app):
     assert old_contacts == new_contacts
 
 
-def test_del_some_contact_by_id(app, db):
+def test_del_some_contact_by_id(app, db, check_ui):
     #If no contacts - create it
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname="TestCount", lastname="TestCountZolotova"))
@@ -43,6 +43,8 @@ def test_del_some_contact_by_id(app, db):
     new_contacts = db.get_contact_list()
     old_contacts.remove(contact)
     assert old_contacts == new_contacts
+    if check_ui:
+        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
 
 
 #def test_del_first_contact(app):

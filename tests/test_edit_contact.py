@@ -19,7 +19,7 @@ def test_edit_contact_firstname(app):
         old_contacts[index] = contact
         assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
-def test_edit_contact_by_id(app, db):
+def test_edit_contact_by_id(app, db, check_ui):
         old_contacts = db.get_contact_list()
         app.open_home_page()
         index = randrange(len(old_contacts))
@@ -31,6 +31,9 @@ def test_edit_contact_by_id(app, db):
         new_contacts = db.get_contact_list()
         old_contacts[index] = contact
         assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+        if check_ui:
+                assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list(),
+                                                                             key=Contact.id_or_max)
 
 
 

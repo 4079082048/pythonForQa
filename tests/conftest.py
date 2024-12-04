@@ -55,14 +55,6 @@ def pytest_addoption(parser):
     parser.addoption("--target", action="store", default="target.json")
     parser.addoption("--check_ui", action="store_true")
 
-##@pytest.fixture(scope="session")
-#def db(request):
-#    dbfixture = DbFixture(host="", name="", user="", password="" )
-#    def fin():
-#        dbfixture.destroy()
-#    request.addfinalizer(fin)
-#    return dbfixture
-
 
 def pytest_generate_tests(metafunc): #получить инфо о тест функции
     for fixture in metafunc.fixturenames: #пробегаем по всем параметрам
