@@ -1,15 +1,26 @@
 import pymysql.cursors
-from fixture.db import DbFixture
+from fixture.orm import ORMFixture #from fixture.db import DbFixture
 
 # было connection = pymysql.connect(host="127.0.0.1", database="addressbook", user="root", password="")
 # создаем объект типа db
-db = DbFixture(host="127.0.0.1", name="addressbook", user="root", password="")
+db = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
+
+#try:
+#  l = db.get_group_list() #получаем списко групп, сохраняем в переменную
+#  for item in l:
+#        print(item)#выводим список
+#  print(len(l)) #выводим длину списка
+#finally:
+#    pass
 
 try:
-  contacts = db.get_contact_list() #получаем списко групп, сохраняем в переменную
-  for contact in contacts:
-        print(contact)#выводим список
-  print(len(contacts)) #выводим длину списка
+  l = db.get_contact_list() #получаем списко групп, сохраняем в переменную
+  for item in l:
+        print(item)#выводим список
+  print(len(l)) #выводим длину списка
 finally:
-    db.destroy()
+    pass
+
+
+
 
