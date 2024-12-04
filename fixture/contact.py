@@ -94,7 +94,6 @@ class ContactHelper():
         self.fill_contact_data(contact)
         wd.find_element(By.NAME, 'update').click()
         self.app.open_home_page()
-
         self.cont_cache = None
 
     def open_contact_to_edit_by_index(self, index):
@@ -105,9 +104,9 @@ class ContactHelper():
     def open_contact_edit_by_id(self, id):
         wd = self.app.wd
         self.app.open_home_page()
-        #wd.find_element(By.XPATH, '//a[contains(@href,"edit.php?id=%"), %id]').click()
-        wd.find_element(By.XPATH, '//td[@class="center"]/a[@href="edit.php?id=%ds"]' % id).click()
+        wd.find_element(By.XPATH, '//a[contains(@href,"edit.php?id=%s")]' % id).click()
         #//a[contains(@href, 'edit.php?id=188')]//img[contains(@alt, 'Edit')]
+
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
