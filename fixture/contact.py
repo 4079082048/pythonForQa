@@ -60,6 +60,7 @@ class ContactHelper():
         wd.find_element(By.XPATH,"//input[@value='Delete']").click()
         self.cont_cache = None
 
+
     def count_contacts(self):
         wd = self.app.wd
         self.app.open_home_page()
