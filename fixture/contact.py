@@ -4,6 +4,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from model.contact import Contact
+from model.group import Group
 import re
 __author__ = 'Sofia'
 
@@ -22,6 +23,21 @@ class ContactHelper():
         self.fill_contact_data(new_contact_data)
         wd.find_element(By.XPATH, '//div[@id="content"]/form/input[20]').click()
         #self.check_main_page()
+
+    def add_contact_to_group(self, new_con,app, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        if app.contact.count() == 0:
+            app.contact.create(Contact(firstname="TestCount2", lastname="TestCountZolotova2"))
+        wd.find_elements(By.NAME, "selected[]")[index].click()
+        if len(app.get_group_list()) == 0:
+            app.group.fill_group_form(Group(name="test000"))
+        wd.find_element(By.XPATH, '//div[@class="right"]//select/option').click()
+
+        # "//*[@id="content"]/form[2]/div[4]/select/option"
+
+
+
 
 
     def username(self):
@@ -106,7 +122,7 @@ class ContactHelper():
         wd = self.app.wd
         self.app.open_home_page()
         wd.find_element(By.XPATH, '//a[contains(@href,"edit.php?id=%s")]' % id).click()
-        #//a[contains(@href, 'edit.php?id=188')]//img[contains(@alt, 'Edit')]
+
 
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
@@ -161,6 +177,8 @@ class ContactHelper():
         self.change_filed_value("email3", contact.email3)
         self.change_filed_value("homepage", contact.homepage)
         self.contact_cache = None
+
+
 
     def change_filed_value(self, field_name, text):
         wd = self.app.wd
