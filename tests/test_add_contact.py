@@ -5,6 +5,7 @@ from data.contacts import testdata
 from tests.conftest import check_ui
 
 
+
 #@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata])
 def test_add_contact(app, db, data_contacts, check_ui):
     contact = data_contacts

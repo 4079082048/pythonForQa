@@ -1,6 +1,7 @@
 import pymysql.cursors
 from fixture.orm import ORMFixture #from fixture.db import DbFixture
 from model.group import Group
+
 from model.contact import Contact
 
 # было connection = pymysql.connect(host="127.0.0.1", database="addressbook", user="root", password="")
