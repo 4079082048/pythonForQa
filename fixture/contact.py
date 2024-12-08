@@ -27,8 +27,6 @@ class ContactHelper():
     def add_contact_to_group(self, new_con,app, index):
         wd = self.app.wd
         self.app.open_home_page()
-        if app.contact.count() == 0:
-            app.contact.create(Contact(firstname="TestCount2", lastname="TestCountZolotova2"))
         wd.find_elements(By.NAME, "selected[]")[index].click()
         if len(app.get_group_list()) == 0:
             app.group.fill_group_form(Group(name="test000"))
