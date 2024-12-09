@@ -29,17 +29,8 @@ class ContactHelper():
         self.app.open_home_page()
         wd.find_elements(By.NAME, '//*[@id="%s"]' % contact_id).click()
         wd.find_element(By.XPATH, '//select[@name="to_group"]/option[@value="%s"]' % group_id).click()
-
-        # "//*[@id="content"]/form[2]/div[4]/select/option"
-        # кликаем по чек-боксу контакта
-       # wd.find_element_by_css_selector("input[id='%s']" % con_id).click()
-        # выбираем имя из выпадающего списка по идентификатору группы
-       # wd.find_element_by_css_selector("select[name='to_group']>option[value='%s']" % gr_id).click()
-        # нажимаем кнопку добавить
-       # wd.find_element_by_xpath("//input[@value='Add to']").click()
-
-
-
+        wd.find_element(By.XPATH, '//input[@value="Add to"]').click()
+6
 
     def username(self):
         wd = self.app.wd
