@@ -30,7 +30,7 @@ class ContactHelper():
         wd.find_elements(By.NAME, '//*[@id="%s"]' % contact_id).click()
         wd.find_element(By.XPATH, '//select[@name="to_group"]/option[@value="%s"]' % group_id).click()
         wd.find_element(By.XPATH, '//input[@value="Add to"]').click()
-6
+
 
     def username(self):
         wd = self.app.wd
