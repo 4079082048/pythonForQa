@@ -24,16 +24,20 @@ class ContactHelper():
         wd.find_element(By.XPATH, '//div[@id="content"]/form/input[20]').click()
         #self.check_main_page()
 
-    def add_contact_to_group(self, new_con,app, index):
+    def add_contact_to_group(self, contact_id, group_id):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_elements(By.NAME, "selected[]")[index].click()
-        if len(app.get_group_list()) == 0:
-            app.group.fill_group_form(Group(name="test000"))
+        wd.find_elements(By.NAME, "selected[]")[id].click()
         wd.find_element(By.XPATH, '//div[@class="right"]//select/option').click()
 
         # "//*[@id="content"]/form[2]/div[4]/select/option"
+        # кликаем по чек-боксу контакта
 
+       # wd.find_element_by_css_selector("input[id='%s']" % con_id).click()
+        # выбираем имя из выпадающего списка по идентификатору группы
+       # wd.find_element_by_css_selector("select[name='to_group']>option[value='%s']" % gr_id).click()
+        # нажимаем кнопку добавить
+       # wd.find_element_by_xpath("//input[@value='Add to']").click()
 
 
 
