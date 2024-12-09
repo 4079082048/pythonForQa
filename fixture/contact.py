@@ -27,12 +27,11 @@ class ContactHelper():
     def add_contact_to_group(self, contact_id, group_id):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_elements(By.NAME, "selected[]")[id].click()
-        wd.find_element(By.XPATH, '//div[@class="right"]//select/option').click()
+        wd.find_elements(By.NAME, '//*[@id="%s"]' % contact_id).click()
+        wd.find_element(By.XPATH, '//select[@name="to_group"]/option[@value="%s"]' % group_id).click()
 
         # "//*[@id="content"]/form[2]/div[4]/select/option"
         # кликаем по чек-боксу контакта
-
        # wd.find_element_by_css_selector("input[id='%s']" % con_id).click()
         # выбираем имя из выпадающего списка по идентификатору группы
        # wd.find_element_by_css_selector("select[name='to_group']>option[value='%s']" % gr_id).click()
