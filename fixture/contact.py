@@ -34,9 +34,10 @@ class ContactHelper():
     def del_contact_from_group(self, contact_id, group_id):
         wd = self.app.wd
         self.app.open_home_page()
+
+        wd.find_element(By.XPATH, '//select[@name="group"]/option[contains(@value, "%s")]' % group_id).click()
         wd.find_element(By.CSS_SELECTOR, 'input[id="%s"]' % contact_id).click()
-        wd.find_element(By.XPATH, '//select[@name="to_group"]/option[contains(@value, "%s")]' % group_id).click()
-        wd.find_element(By.XPATH, '//input[@value="Add to"]').click()
+        wd.find_element(By.XPATH, '//input[@name="remove"]').click()
 
     def username(self):
         wd = self.app.wd
