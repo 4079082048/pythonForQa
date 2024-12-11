@@ -34,8 +34,14 @@ def test_del_contact_from_group(app, orm):
     random_g_id = random.randrange(len(db_group_list))  # Get random group index
     group = db_group_list[random_g_id]
 
-    no_g_contacts = orm.get_contacts_not_in_group(group)  # Get contacts without group from DB
-    random_id = random.randrange(len(no_g_contacts))  # Get random index in randrange
-    r_contact = no_g_contacts[random_id]  # Get random contact from index
+    w_g_contacts = orm.get_contacts_in_group(group)  # Get contacts without group from DB
+    if w_g_contacts == []: #If there are no contacts in the group add contact to group
+            w_g_contacts = orm.get_contact_list()
+            contact_id = randrange(len(w_g_contacts))
+            contact = w_g_contacts[contact_id]
+            app.contact.add_contact_to_group(contact.id, group.id)
+            w_g_contacts = orm.get_contacts_in_group(group)
+    random_id = random.randrange(len(w_g_contacts))  # Get random index in randrange
+    r_contact = w_g_contacts[random_id]  # Get random contact from index
 
-    app.contact.    del_contact_from_group(r_contact.id, group.id)
+    app.contact.del_contact_from_group(r_contact.id, group.id)
