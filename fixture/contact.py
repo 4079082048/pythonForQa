@@ -13,8 +13,7 @@ class ContactHelper():
     def __init__(self, app):
         self.app = app
 
-
-
+    contact_cache = None
     def create(self, new_contact_data):
         # create contact
         wd = self.app.wd
@@ -34,10 +33,11 @@ class ContactHelper():
     def del_contact_from_group(self, contact_id, group_id):
         wd = self.app.wd
         self.app.open_home_page()
-
         wd.find_element(By.XPATH, '//select[@name="group"]/option[contains(@value, "%s")]' % group_id).click()
         wd.find_element(By.CSS_SELECTOR, 'input[id="%s"]' % contact_id).click()
         wd.find_element(By.XPATH, '//input[@name="remove"]').click()
+        self.cont_cache = None
+
 
     def username(self):
         wd = self.app.wd
@@ -122,7 +122,6 @@ class ContactHelper():
         self.app.open_home_page()
         wd.find_element(By.XPATH, '//a[contains(@href,"edit.php?id=%s")]' % id).click()
 
-
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
@@ -143,7 +142,6 @@ class ContactHelper():
         email3 = wd.find_element(By.NAME,"email3").get_attribute("value")
         address = wd.find_element(By.NAME,"address").get_attribute("value")
         return Contact(firstname= firstname, lastname= lastname, id = id, homephone= homephone, workphone= workphone, mobilephone= mobilephone, fax= fax, email3= email3, email2= email2, email= email, address= address)
-
 
 
     def get_contact_from_view_page(self, index):
@@ -178,7 +176,6 @@ class ContactHelper():
         self.contact_cache = None
 
 
-
     def change_filed_value(self, field_name, text):
         wd = self.app.wd
         if text is not None:
@@ -192,7 +189,7 @@ class ContactHelper():
         self.app.open_home_page()
         return len(wd.find_elements(By.NAME, "selected[]"))
 
-    contact_cache = None
+
     def get_contact_list(self):
         if self.contact_cache is None:
             wd = self.app.wd
@@ -208,6 +205,7 @@ class ContactHelper():
                 address = cells[3].text
                 self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id, all_phones_from_home_page=all_phones, all_emails_from_home_page=all_emails, address= address)) #, fax= all_phones[3]
         return list(self.contact_cache)
+
 
 
     def alert_accept(self):

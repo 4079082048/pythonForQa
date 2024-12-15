@@ -56,13 +56,16 @@ class ORMFixture:
     @db_session
     def convert_contacts_to_model(self, contacts):
         def convert(contact):
-            return Contact(id=str(contact.id), firstname= contact.firstname, lastname= contact.lastname, address=contact.address, homephone=contact.home, mobilephone=contact.mobile, workphone=contact.work, email=contact.email, email2=contact.email2, email3=contact.email3)
+            return Contact(id=str(contact.id), firstname= contact.firstname, lastname= contact.lastname,
+                           address=contact.address, homephone=contact.home, mobilephone=contact.mobile,
+                           workphone=contact.work, email=contact.email, email2=contact.email2, email3=contact.email3)
         return list(map(convert, contacts))
 
     @db_session
     def get_contacts_in_group(self, group):
         orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0] #делаем выборку из обьектов и преобразовываем с список
         return self.convert_contacts_to_model(orm_group.contacts)
+
 
     @db_session
     def get_contacts_not_in_group(self, group):
