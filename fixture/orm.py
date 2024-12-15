@@ -34,6 +34,7 @@ class ORMFixture:
         groups = Set(lambda :ORMFixture.ORMGroup,table="address_in_groups", column="group_id", reverse="contacts", lazy=True )#подгружаем данные только при обращении = lazy
 
     def __init__(self, host, name, user, password):
+
         self.db.bind('mysql',host=host, database=name, user=user, password=password) #сделали привязку , conv=decoders
         self.db.generate_mapping() #сопоставляются
         sql_debug(True)
@@ -68,3 +69,4 @@ class ORMFixture:
         orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0]
         return self.convert_contacts_to_model(
             select (c for c in ORMFixture.ORMContact if c.deprecated is None and orm_group not in c.groups))
+

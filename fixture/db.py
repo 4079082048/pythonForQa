@@ -38,3 +38,7 @@ class DbFixture:
         finally:
             cursor.close()
         return list_c
+
+
+    def destroy(self):
+        self.connection.close()

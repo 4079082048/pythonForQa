@@ -20,6 +20,9 @@ def test_add_contact_to_group(app, orm):
     group = db_group_list[random_g_id]
 
     no_g_contacts = orm.get_contacts_not_in_group(group) #Get contacts without group from DB
+    if no_g_contacts == []:
+        app.contact.create(Contact(firstname="FisrtNameEmpty"))
+        no_g_contacts = orm.get_contacts_not_in_group(group)
     random_id = random.randrange(len(no_g_contacts)) #Get random index in randrange
     r_contact = no_g_contacts[random_id] #Get random contact from index
     app.contact.add_contact_to_group(r_contact.id, group.id)
