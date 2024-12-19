@@ -25,9 +25,11 @@ def test_add_contact_to_group(app, orm):
         no_g_contacts = orm.get_contacts_not_in_group(group)
     random_id = random.randrange(len(no_g_contacts)) #Get random index in randrange
     r_contact = no_g_contacts[random_id] #Get random contact from index
+    contacts_in_group_b = orm.get_contacts_in_group(group)
     app.contact.add_contact_to_group(r_contact.id, group.id)
-
-
+    contacts_in_group_a = orm.get_contacts_in_group(group)
+    contacts_in_group_b.append(r_contact) #before contacts + new one
+    assert sorted(contacts_in_group_a, key=Group.id_or_max) == sorted(contacts_in_group_b, key=Group.id_or_max)
 
 
 def test_del_contact_from_group(app, orm):
@@ -39,28 +41,23 @@ def test_del_contact_from_group(app, orm):
     db_group_list = orm.get_group_list()  # Get groups list from db
     if not db_group_list:
         pytest.fail("No groups found in the database.")
-
     random_g_id = random.randrange(len(db_group_list))  # Get random group index
     group = db_group_list[random_g_id]
 
-    g_contacts = orm.get_contacts_in_group(group)  # Get contacts in group from DB
-    if not g_contacts:  # Check if there are no contacts in the group
-        all_contacts = orm.get_contact_list()
-        if not all_contacts:  # If there are no contacts at all
-            app.contact.create(Contact(firstname="NewContactForGroup"))
-            all_contacts = orm.get_contact_list()
+    db_contact_list = orm.get_contacts_in_group(group)  # Get contacts in group from DB
+    if db_contact_list == []:
+        db_contact_list = orm.get_con_list()
+        contact_id = randrange(len(db_contact_list))
+        contact = db_contact_list[contact_id]
+        app.contact.add_contact_to_group(contact.id, group.id)
+        db_contact_list = orm.get_contact_list(group)
+    contact_id = randrange(len(db_contact_list))
+    contact = db_contact_list[contact_id]
+    contacts_in_group_before = orm.get_contacts_not_in_group(group)
+    app.contact.del_contact_from_group(contact.id, group.id)
+    contacts_in_group_after = orm.get_contacts_in_group(group)
+    contacts_in_group_after.append(contact)
+    assert sorted(contacts_in_group_after, key=Group.id_or_max) == sorted(contacts_in_group_before, key=Group.id_or_max)
 
-        contact_id = random.choice(all_contacts).id  # Get a random contact ID
-        app.contact.add_contact_to_group(contact_id, group.id)  # Add contact to group
-        g_contacts = orm.get_contacts_in_group(group)  # Refresh the list of contacts in the group
-
-    # Ensure we have contacts in the group before trying to delete one
-    if g_contacts:
-        contact_to_delete = random.choice(g_contacts)  # Choose a random contact to delete
-        app.contact.del_contact_from_group(contact_to_delete.id, group.id)
-
-        # Refresh the contacts in the group after deletion
-        g_contacts_after_deletion = orm.get_contacts_in_group(group)
-        assert contact_to_delete not in g_contacts_after_deletion, "Contact was not deleted from the group."
 
 
