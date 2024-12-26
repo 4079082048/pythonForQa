@@ -1,5 +1,4 @@
 import random
-
 from pytest_bdd import given, when, then
 from model.group import Group
 
@@ -38,10 +37,10 @@ def random_group(non_empty_group_list):
 def delete_group(app, random_group):
     app.group.delete_group_by_id(random_group.id)
 
+
 @then('the new group is equal to the old list group without the deleted group')
 def verify_group_deleted(db, non_empty_group_list, random_group, app, check_ui):
     old_groups = non_empty_group_list
-    new_group = db.get_group_list()
     new_groups = db.get_group_list()
     old_groups.remove(random_group)
     assert old_groups == new_groups
