@@ -1,12 +1,14 @@
 import random
-from pytest_bdd import given, when, then
+from pytest_bdd import given, when, then, parsers
+
 from model.group import Group
 
-@given('a group list') #это фикстура
+
+@given('a group list', target_fixture='group_list') #это фикстура
 def group_list(db):
     return db.get_group_list()
 
-@given('a group with <name>, <header> and <footer>')
+@given(parsers.parse('a group with {name}, {header} and {footer}'), target_fixture='new_group')
 def new_group(name, header, footer):
     return Group(name=name, footer=footer, header=header)
 
@@ -22,6 +24,13 @@ def verify_new_group_added(db, group_list, new_group):
     new_groups = db.get_group_list()
     old_groups.append(new_group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+
+
+попробуйте добавить вот так дополнительную подсказку target_fixture
+@given('a group list', target_fixture='group_list') #это фикстура
+def group_list(db):
+    return db.get_group_list()
+
 
 @given('a non-empty group list')
 def non_empty_group_list(db, app):
