@@ -14,5 +14,5 @@ Feature: Group management
 
   Scenario: Delete a group
     Given a non-empty group list
-    When I delete the group
+    When I delete the group from the list
     Then the group list should not contain the deleted group
