@@ -8,6 +8,7 @@ import re
 __author__ = 'Sofia'
 
 
+
 class ContactHelper():
     def __init__(self, app):
         self.app = app
