@@ -3,6 +3,7 @@ __author__ = 'Sofia'
 from random import randrange
 from model.contact import Contact
 import random
+from fixture.db import DbFixture
 
 
 def test_del_some_contact(app):

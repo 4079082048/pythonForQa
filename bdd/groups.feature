@@ -1,4 +1,6 @@
- Scenario Outline: Add new group
+Feature: Group management
+
+  Scenario Outline: Add new group
     Given a group list
     Given a group with <name>, <header> and <footer>
     When I add the group to the list
@@ -9,8 +11,7 @@
       | name1 | header1 | footer1 |
       | name2 | header2 | footer2 |
 
-   Scenario: Delete a group
-   Given a non-empty group list
-   Given a random group from the list
-   When I delete the group from the list
-   Then the new group is equal to the old list group without the deleted group
+  Scenario: Delete a group
+    Given a non-empty group list
+    When I delete the group
+    Then the group list should not contain the deleted group
