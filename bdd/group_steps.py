@@ -26,10 +26,6 @@ def verify_new_group_added(db, group_list, new_group):
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 
-попробуйте добавить вот так дополнительную подсказку target_fixture
-@given('a group list', target_fixture='group_list') #это фикстура
-def group_list(db):
-    return db.get_group_list()
 
 
 @given('a non-empty group list')
